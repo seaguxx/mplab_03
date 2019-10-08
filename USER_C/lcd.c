@@ -71,7 +71,7 @@ void sendDat(unsigned char dat) {
     unsigned char dath, datl;
     dath = dat & 0xf0;
     datl = ((dat & 0x0f) << 4);
-    // Cs_SetHigh();
+     //Cs_SetHigh();
     __delay_ms(20);
     Spi8b(0xfa);
 
@@ -110,25 +110,32 @@ void LcdString(unsigned char *p) {
 unsigned char Readspi(void)
 {
     char i = 0;
-    unsigned char dat=0xff;//
+    unsigned char dat=0x00;//
     
     for (i = 0; i < 8; i++) {
-              
-        Sid_SetHigh();       
+        
+        Sid_SetDigitalInput();
+        
+        Sid_SetHigh();
+        
         Clk_SetHigh();
         __delay_ms(2);
         Clk_SetLow();
         __delay_ms(2);
-        if(Sid_GetValue()==1)
+        if(Sid_GetValue()==1 )
         {
             dat=dat|0x01;
+            Yled_SetLow();
         }
         else
         {
             dat=dat;
+            Yled_SetHigh();
+            
         }
         dat = dat << 1;
     }
+    Sid_SetDigitalOutput();
     return (dat);
 }
 unsigned char LCD_read_arm(void)
@@ -136,9 +143,11 @@ unsigned char LCD_read_arm(void)
     unsigned char a1=0x00;
     unsigned char a2=0x00;
     unsigned char a3=0x00;
+    Cs_SetHigh();
     Spi8b(0xfe);
     a1=Readspi();
     a2=Readspi();
+    //Cs_SetLow();
     a3=(a1&0xf0)|(a2>>4);
     return (a3);
 }
