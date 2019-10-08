@@ -2,9 +2,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "31 AP_C/../USER_H/lcd.h
 [; ;AP_C/../USER_H/lcd.h: 31: extern void sendCom(unsigned char com);
 [v _sendCom `(v ~T0 @X0 0 ef1`uc ]
-[v F22568 `(v ~T0 @X0 1 tf1`ul ]
+[v F22569 `(v ~T0 @X0 1 tf1`ul ]
 "183 D:\XC8\pic\include\pic18.h
-[v __delay `JF22568 ~T0 @X0 0 e ]
+[v __delay `JF22569 ~T0 @X0 0 e ]
 [p i __delay ]
 "30 AP_C/../USER_H/lcd.h
 [; ;AP_C/../USER_H/lcd.h: 30: extern void sendDat(unsigned char dat);
@@ -3707,4 +3707,94 @@ Version 4.0 HI-TECH Software Intermediate Code
 "178
 [; ;AP_C/AP_LCD.c: 178: }
 [e :UE 3259 ]
+}
+"179
+[; ;AP_C/AP_LCD.c: 179: void GRam_Clear(void)
+[v _GRam_Clear `(v ~T0 @X0 1 ef ]
+"180
+[; ;AP_C/AP_LCD.c: 180: {
+{
+[e :U _GRam_Clear ]
+[f ]
+"181
+[; ;AP_C/AP_LCD.c: 181:     char a=0,b=0;
+[v _a `uc ~T0 @X0 1 a ]
+[e = _a -> -> 0 `i `uc ]
+[v _b `uc ~T0 @X0 1 a ]
+[e = _b -> -> 0 `i `uc ]
+"182
+[; ;AP_C/AP_LCD.c: 182:     sendCom(0x34);
+[e ( _sendCom (1 -> -> 52 `i `uc ]
+"183
+[; ;AP_C/AP_LCD.c: 183:     for(a=0;a<1;a++)
+{
+[e = _a -> -> 0 `i `uc ]
+[e $ < -> _a `i -> 1 `i 3264  ]
+[e $U 3265  ]
+[e :U 3264 ]
+"184
+[; ;AP_C/AP_LCD.c: 184:     {
+{
+"185
+[; ;AP_C/AP_LCD.c: 185:         if(a==0)
+[e $ ! == -> _a `i -> 0 `i 3267  ]
+"186
+[; ;AP_C/AP_LCD.c: 186:         {
+{
+"187
+[; ;AP_C/AP_LCD.c: 187:             sendCom(0x80);
+[e ( _sendCom (1 -> -> 128 `i `uc ]
+"188
+[; ;AP_C/AP_LCD.c: 188:         }
+}
+[e $U 3268  ]
+"189
+[; ;AP_C/AP_LCD.c: 189:         else
+[e :U 3267 ]
+"190
+[; ;AP_C/AP_LCD.c: 190:         {
+{
+"191
+[; ;AP_C/AP_LCD.c: 191:             sendCom(0X88);
+[e ( _sendCom (1 -> -> 136 `i `uc ]
+"192
+[; ;AP_C/AP_LCD.c: 192:         }
+}
+[e :U 3268 ]
+"193
+[; ;AP_C/AP_LCD.c: 193:         for(b=0;b<16;b++)
+{
+[e = _b -> -> 0 `i `uc ]
+[e $ < -> _b `i -> 16 `i 3269  ]
+[e $U 3270  ]
+[e :U 3269 ]
+"194
+[; ;AP_C/AP_LCD.c: 194:         {
+{
+"195
+[; ;AP_C/AP_LCD.c: 195:             sendDat(0x00);
+[e ( _sendDat (1 -> -> 0 `i `uc ]
+"196
+[; ;AP_C/AP_LCD.c: 196:             sendDat(0x00);
+[e ( _sendDat (1 -> -> 0 `i `uc ]
+"197
+[; ;AP_C/AP_LCD.c: 197:         }
+}
+[e ++ _b -> -> 1 `i `uc ]
+[e $ < -> _b `i -> 16 `i 3269  ]
+[e :U 3270 ]
+}
+"198
+[; ;AP_C/AP_LCD.c: 198:     }
+}
+[e ++ _a -> -> 1 `i `uc ]
+[e $ < -> _a `i -> 1 `i 3264  ]
+[e :U 3265 ]
+}
+"199
+[; ;AP_C/AP_LCD.c: 199:     sendCom(0x36);
+[e ( _sendCom (1 -> -> 54 `i `uc ]
+"200
+[; ;AP_C/AP_LCD.c: 200: }
+[e :UE 3263 ]
 }

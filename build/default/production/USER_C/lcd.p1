@@ -42,7 +42,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "31 USER_C/../USER_H/lcd.h
 [; ;USER_C/../USER_H/lcd.h: 31: extern void sendCom(unsigned char com);
 [v _sendCom `(v ~T0 @X0 0 ef1`uc ]
-"4882 D:\XC8\pic\include\pic18f25k83.h
+"4665 D:\XC8\pic\include\pic18f25k83.h
+[s S3081 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S3081 . TRISC0 TRISC1 TRISC2 TRISC3 TRISC4 TRISC5 TRISC6 TRISC7 ]
+"4664
+[u S3080 `S3081 1 ]
+[n S3080 . . ]
+"4676
+[v _TRISCbits `VS3080 ~T0 @X0 0 e@16324 ]
+"4882
 [s S3089 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S3089 . RC0 RC1 RC2 RC3 RC4 RC5 RC6 RC7 ]
 "4892
@@ -3429,9 +3437,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
 "113
-[; ;USER_C/lcd.c: 113:     unsigned char dat=0xff;
+[; ;USER_C/lcd.c: 113:     unsigned char dat=0x00;
 [v _dat `uc ~T0 @X0 1 a ]
-[e = _dat -> -> 255 `i `uc ]
+[e = _dat -> -> 0 `i `uc ]
 "115
 [; ;USER_C/lcd.c: 115:     for (i = 0; i < 8; i++) {
 {
@@ -3441,404 +3449,439 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 3265 ]
 {
 "117
-[; ;USER_C/lcd.c: 117:         do { LATCbits.LATC4 = 1; } while(0);
+[; ;USER_C/lcd.c: 117:         do { TRISCbits.TRISC4 = 1; } while(0);
 [e :U 3270 ]
+{
+[e = . . _TRISCbits 0 4 -> -> 1 `i `uc ]
+}
+[e :U 3269 ]
+"119
+[; ;USER_C/lcd.c: 119:         do { LATCbits.LATC4 = 1; } while(0);
+[e :U 3273 ]
 {
 [e = . . _LATCbits 0 4 -> -> 1 `i `uc ]
 }
-[e :U 3269 ]
-"118
-[; ;USER_C/lcd.c: 118:         do { LATCbits.LATC3 = 1; } while(0);
-[e :U 3273 ]
+[e :U 3272 ]
+"121
+[; ;USER_C/lcd.c: 121:         do { LATCbits.LATC3 = 1; } while(0);
+[e :U 3276 ]
 {
 [e = . . _LATCbits 0 3 -> -> 1 `i `uc ]
 }
-[e :U 3272 ]
-"119
-[; ;USER_C/lcd.c: 119:         _delay((unsigned long)((2)*(1000000/4000.0)));
+[e :U 3275 ]
+"122
+[; ;USER_C/lcd.c: 122:         _delay((unsigned long)((2)*(1000000/4000.0)));
 [e ( __delay (1 -> * -> -> 2 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-"120
-[; ;USER_C/lcd.c: 120:         do { LATCbits.LATC3 = 0; } while(0);
-[e :U 3276 ]
+"123
+[; ;USER_C/lcd.c: 123:         do { LATCbits.LATC3 = 0; } while(0);
+[e :U 3279 ]
 {
 [e = . . _LATCbits 0 3 -> -> 0 `i `uc ]
 }
-[e :U 3275 ]
-"121
-[; ;USER_C/lcd.c: 121:         _delay((unsigned long)((2)*(1000000/4000.0)));
-[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-"122
-[; ;USER_C/lcd.c: 122:         if(PORTCbits.RC4==1)
-[e $ ! == -> . . _PORTCbits 0 4 `i -> 1 `i 3277  ]
-"123
-[; ;USER_C/lcd.c: 123:         {
-{
+[e :U 3278 ]
 "124
-[; ;USER_C/lcd.c: 124:             dat=dat|0x01;
-[e = _dat -> | -> _dat `i -> 1 `i `uc ]
+[; ;USER_C/lcd.c: 124:         _delay((unsigned long)((2)*(1000000/4000.0)));
+[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
 "125
-[; ;USER_C/lcd.c: 125:         }
-}
-[e $U 3278  ]
+[; ;USER_C/lcd.c: 125:         if(PORTCbits.RC4==1 )
+[e $ ! == -> . . _PORTCbits 0 4 `i -> 1 `i 3280  ]
 "126
-[; ;USER_C/lcd.c: 126:         else
-[e :U 3277 ]
-"127
-[; ;USER_C/lcd.c: 127:         {
+[; ;USER_C/lcd.c: 126:         {
 {
+"127
+[; ;USER_C/lcd.c: 127:             dat=dat|0x01;
+[e = _dat -> | -> _dat `i -> 1 `i `uc ]
 "128
-[; ;USER_C/lcd.c: 128:             dat=dat;
-[e = _dat _dat ]
+[; ;USER_C/lcd.c: 128:             do { LATBbits.LATB7 = 0; } while(0);
+[e :U 3283 ]
+{
+[e = . . _LATBbits 0 7 -> -> 0 `i `uc ]
+}
+[e :U 3282 ]
 "129
 [; ;USER_C/lcd.c: 129:         }
 }
-[e :U 3278 ]
+[e $U 3284  ]
 "130
-[; ;USER_C/lcd.c: 130:         dat = dat << 1;
-[e = _dat -> << -> _dat `i -> 1 `i `uc ]
+[; ;USER_C/lcd.c: 130:         else
+[e :U 3280 ]
 "131
-[; ;USER_C/lcd.c: 131:     }
+[; ;USER_C/lcd.c: 131:         {
+{
+"132
+[; ;USER_C/lcd.c: 132:             dat=dat;
+[e = _dat _dat ]
+"133
+[; ;USER_C/lcd.c: 133:             do { LATBbits.LATB7 = 1; } while(0);
+[e :U 3287 ]
+{
+[e = . . _LATBbits 0 7 -> -> 1 `i `uc ]
+}
+[e :U 3286 ]
+"135
+[; ;USER_C/lcd.c: 135:         }
+}
+[e :U 3284 ]
+"136
+[; ;USER_C/lcd.c: 136:         dat = dat << 1;
+[e = _dat -> << -> _dat `i -> 1 `i `uc ]
+"137
+[; ;USER_C/lcd.c: 137:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 8 `i 3265  ]
 [e :U 3266 ]
 }
-"132
-[; ;USER_C/lcd.c: 132:     return (dat);
+"138
+[; ;USER_C/lcd.c: 138:     do { TRISCbits.TRISC4 = 0; } while(0);
+[e :U 3290 ]
+{
+[e = . . _TRISCbits 0 4 -> -> 0 `i `uc ]
+}
+[e :U 3289 ]
+"139
+[; ;USER_C/lcd.c: 139:     return (dat);
 [e ) _dat ]
 [e $UE 3264  ]
-"133
-[; ;USER_C/lcd.c: 133: }
+"140
+[; ;USER_C/lcd.c: 140: }
 [e :UE 3264 ]
 }
-"134
-[; ;USER_C/lcd.c: 134: unsigned char LCD_read_arm(void)
+"141
+[; ;USER_C/lcd.c: 141: unsigned char LCD_read_arm(void)
 [v _LCD_read_arm `(uc ~T0 @X0 1 ef ]
-"135
-[; ;USER_C/lcd.c: 135: {
+"142
+[; ;USER_C/lcd.c: 142: {
 {
 [e :U _LCD_read_arm ]
 [f ]
-"136
-[; ;USER_C/lcd.c: 136:     unsigned char a1=0x00;
+"143
+[; ;USER_C/lcd.c: 143:     unsigned char a1=0x00;
 [v _a1 `uc ~T0 @X0 1 a ]
 [e = _a1 -> -> 0 `i `uc ]
-"137
-[; ;USER_C/lcd.c: 137:     unsigned char a2=0x00;
+"144
+[; ;USER_C/lcd.c: 144:     unsigned char a2=0x00;
 [v _a2 `uc ~T0 @X0 1 a ]
 [e = _a2 -> -> 0 `i `uc ]
-"138
-[; ;USER_C/lcd.c: 138:     unsigned char a3=0x00;
+"145
+[; ;USER_C/lcd.c: 145:     unsigned char a3=0x00;
 [v _a3 `uc ~T0 @X0 1 a ]
 [e = _a3 -> -> 0 `i `uc ]
-"139
-[; ;USER_C/lcd.c: 139:     Spi8b(0xfe);
-[e ( _Spi8b (1 -> -> 254 `i `uc ]
-"140
-[; ;USER_C/lcd.c: 140:     a1=Readspi();
-[e = _a1 ( _Readspi ..  ]
-"141
-[; ;USER_C/lcd.c: 141:     a2=Readspi();
-[e = _a2 ( _Readspi ..  ]
-"142
-[; ;USER_C/lcd.c: 142:     a3=(a1&0xf0)|(a2>>4);
-[e = _a3 -> | & -> _a1 `i -> 240 `i >> -> _a2 `i -> 4 `i `uc ]
-"143
-[; ;USER_C/lcd.c: 143:     return (a3);
-[e ) _a3 ]
-[e $UE 3279  ]
-"144
-[; ;USER_C/lcd.c: 144: }
-[e :UE 3279 ]
-}
-"145
-[; ;USER_C/lcd.c: 145: void Draw_point(unsigned char X,unsigned char Y,unsigned char Color)
-[v _Draw_point `(v ~T0 @X0 1 ef3`uc`uc`uc ]
 "146
-[; ;USER_C/lcd.c: 146: {
+[; ;USER_C/lcd.c: 146:     do { LATAbits.LATA5 = 1; } while(0);
+[e :U 3294 ]
+{
+[e = . . _LATAbits 0 5 -> -> 1 `i `uc ]
+}
+[e :U 3293 ]
+"147
+[; ;USER_C/lcd.c: 147:     Spi8b(0xfe);
+[e ( _Spi8b (1 -> -> 254 `i `uc ]
+"148
+[; ;USER_C/lcd.c: 148:     a1=Readspi();
+[e = _a1 ( _Readspi ..  ]
+"149
+[; ;USER_C/lcd.c: 149:     a2=Readspi();
+[e = _a2 ( _Readspi ..  ]
+"151
+[; ;USER_C/lcd.c: 151:     a3=(a1&0xf0)|(a2>>4);
+[e = _a3 -> | & -> _a1 `i -> 240 `i >> -> _a2 `i -> 4 `i `uc ]
+"152
+[; ;USER_C/lcd.c: 152:     return (a3);
+[e ) _a3 ]
+[e $UE 3291  ]
+"153
+[; ;USER_C/lcd.c: 153: }
+[e :UE 3291 ]
+}
+"154
+[; ;USER_C/lcd.c: 154: void Draw_point(unsigned char X,unsigned char Y,unsigned char Color)
+[v _Draw_point `(v ~T0 @X0 1 ef3`uc`uc`uc ]
+"155
+[; ;USER_C/lcd.c: 155: {
 {
 [e :U _Draw_point ]
-"145
-[; ;USER_C/lcd.c: 145: void Draw_point(unsigned char X,unsigned char Y,unsigned char Color)
+"154
+[; ;USER_C/lcd.c: 154: void Draw_point(unsigned char X,unsigned char Y,unsigned char Color)
 [v _X `uc ~T0 @X0 1 r1 ]
 [v _Y `uc ~T0 @X0 1 r2 ]
 [v _Color `uc ~T0 @X0 1 r3 ]
-"146
-[; ;USER_C/lcd.c: 146: {
+"155
+[; ;USER_C/lcd.c: 155: {
 [f ]
-"147
-[; ;USER_C/lcd.c: 147:     unsigned char Row, Tier, Tier_bit;
+"156
+[; ;USER_C/lcd.c: 156:     unsigned char Row, Tier, Tier_bit;
 [v _Row `uc ~T0 @X0 1 a ]
 [v _Tier `uc ~T0 @X0 1 a ]
 [v _Tier_bit `uc ~T0 @X0 1 a ]
-"148
-[; ;USER_C/lcd.c: 148:     unsigned char ReadOldH, ReadOldL;
+"157
+[; ;USER_C/lcd.c: 157:     unsigned char ReadOldH, ReadOldL;
 [v _ReadOldH `uc ~T0 @X0 1 a ]
 [v _ReadOldL `uc ~T0 @X0 1 a ]
-"149
-[; ;USER_C/lcd.c: 149:     sendCom(0x34);
+"158
+[; ;USER_C/lcd.c: 158:     sendCom(0x34);
 [e ( _sendCom (1 -> -> 52 `i `uc ]
-"150
-[; ;USER_C/lcd.c: 150:     sendCom(0x36);
+"159
+[; ;USER_C/lcd.c: 159:     sendCom(0x36);
 [e ( _sendCom (1 -> -> 54 `i `uc ]
-"151
-[; ;USER_C/lcd.c: 151:     Tier=X>>4;
+"160
+[; ;USER_C/lcd.c: 160:     Tier=X>>4;
 [e = _Tier -> >> -> _X `i -> 4 `i `uc ]
-"152
-[; ;USER_C/lcd.c: 152:     Tier_bit=X&0x0f;
+"161
+[; ;USER_C/lcd.c: 161:     Tier_bit=X&0x0f;
 [e = _Tier_bit -> & -> _X `i -> 15 `i `uc ]
-"154
-[; ;USER_C/lcd.c: 154:     if(Y<32) { Row=Y; }
-[e $ ! < -> _Y `i -> 32 `i 3281  ]
+"163
+[; ;USER_C/lcd.c: 163:     if(Y<32) { Row=Y; }
+[e $ ! < -> _Y `i -> 32 `i 3296  ]
 {
 [e = _Row _Y ]
 }
-[e $U 3282  ]
-"155
-[; ;USER_C/lcd.c: 155:     else { Row= Y-32; Tier+=8; }
-[e :U 3281 ]
+[e $U 3297  ]
+"164
+[; ;USER_C/lcd.c: 164:     else { Row= Y-32; Tier+=8; }
+[e :U 3296 ]
 {
 [e = _Row -> - -> _Y `i -> 32 `i `uc ]
 [e =+ _Tier -> -> 8 `i `uc ]
 }
-[e :U 3282 ]
-"157
-[; ;USER_C/lcd.c: 157:     sendCom(Row+0x80);
-[e ( _sendCom (1 -> + -> _Row `i -> 128 `i `uc ]
-"158
-[; ;USER_C/lcd.c: 158:     sendCom(Tier+0x80);
-[e ( _sendCom (1 -> + -> _Tier `i -> 128 `i `uc ]
-"160
-[; ;USER_C/lcd.c: 160:     LCD_read_arm();
-[e ( _LCD_read_arm ..  ]
-"161
-[; ;USER_C/lcd.c: 161:     ReadOldH=LCD_read_arm();
-[e = _ReadOldH ( _LCD_read_arm ..  ]
-"162
-[; ;USER_C/lcd.c: 162:     ReadOldL=LCD_read_arm();
-[e = _ReadOldL ( _LCD_read_arm ..  ]
-"164
-[; ;USER_C/lcd.c: 164:     sendCom(Row+0x80);
-[e ( _sendCom (1 -> + -> _Row `i -> 128 `i `uc ]
-"165
-[; ;USER_C/lcd.c: 165:     sendCom(Tier+0x80);
-[e ( _sendCom (1 -> + -> _Tier `i -> 128 `i `uc ]
+[e :U 3297 ]
 "166
-[; ;USER_C/lcd.c: 166:     if(Tier_bit<8 )
-[e $ ! < -> _Tier_bit `i -> 8 `i 3283  ]
+[; ;USER_C/lcd.c: 166:     sendCom(Row+0x80);
+[e ( _sendCom (1 -> + -> _Row `i -> 128 `i `uc ]
 "167
-[; ;USER_C/lcd.c: 167:     {
-{
-"168
-[; ;USER_C/lcd.c: 168:         switch(Color)
-[e $U 3285  ]
+[; ;USER_C/lcd.c: 167:     sendCom(Tier+0x80);
+[e ( _sendCom (1 -> + -> _Tier `i -> 128 `i `uc ]
 "169
-[; ;USER_C/lcd.c: 169:         {
-{
+[; ;USER_C/lcd.c: 169:     LCD_read_arm();
+[e ( _LCD_read_arm ..  ]
 "170
-[; ;USER_C/lcd.c: 170:             case 0 : ReadOldH&=(~(0x01<<( 7 - Tier_bit ))); break ;
-[e :U 3286 ]
-[e =& _ReadOldH -> ~ << -> 1 `i - -> 7 `i -> _Tier_bit `i `uc ]
-[e $U 3284  ]
+[; ;USER_C/lcd.c: 170:     ReadOldH=LCD_read_arm();
+[e = _ReadOldH ( _LCD_read_arm ..  ]
 "171
-[; ;USER_C/lcd.c: 171:             case 1 : ReadOldH|=( 0x01 <<( 7 - Tier_bit )) ; break ;
-[e :U 3287 ]
-[e =| _ReadOldH -> << -> 1 `i - -> 7 `i -> _Tier_bit `i `uc ]
-[e $U 3284  ]
-"172
-[; ;USER_C/lcd.c: 172:             case 2 : ReadOldH^=( 0x01 <<( 7 - Tier_bit )) ; break ;
-[e :U 3288 ]
-[e =^ _ReadOldH -> << -> 1 `i - -> 7 `i -> _Tier_bit `i `uc ]
-[e $U 3284  ]
+[; ;USER_C/lcd.c: 171:     ReadOldL=LCD_read_arm();
+[e = _ReadOldL ( _LCD_read_arm ..  ]
 "173
-[; ;USER_C/lcd.c: 173:             default : break ;
-[e :U 3289 ]
-[e $U 3284  ]
+[; ;USER_C/lcd.c: 173:     sendCom(Row+0x80);
+[e ( _sendCom (1 -> + -> _Row `i -> 128 `i `uc ]
 "174
-[; ;USER_C/lcd.c: 174:         }
-}
-[e $U 3284  ]
-[e :U 3285 ]
-[e [\ -> _Color `i , $ -> 0 `i 3286
- , $ -> 1 `i 3287
- , $ -> 2 `i 3288
- 3289 ]
-[e :U 3284 ]
+[; ;USER_C/lcd.c: 174:     sendCom(Tier+0x80);
+[e ( _sendCom (1 -> + -> _Tier `i -> 128 `i `uc ]
 "175
-[; ;USER_C/lcd.c: 175:         sendDat(ReadOldH);
-[e ( _sendDat (1 _ReadOldH ]
+[; ;USER_C/lcd.c: 175:     if(Tier_bit<8 )
+[e $ ! < -> _Tier_bit `i -> 8 `i 3298  ]
 "176
-[; ;USER_C/lcd.c: 176:         sendDat(ReadOldL);
-[e ( _sendDat (1 _ReadOldL ]
+[; ;USER_C/lcd.c: 176:     {
+{
 "177
-[; ;USER_C/lcd.c: 177:     }
-}
-[e $U 3290  ]
+[; ;USER_C/lcd.c: 177:         switch(Color)
+[e $U 3300  ]
 "178
-[; ;USER_C/lcd.c: 178:     else
-[e :U 3283 ]
+[; ;USER_C/lcd.c: 178:         {
+{
 "179
-[; ;USER_C/lcd.c: 179:     {
-{
+[; ;USER_C/lcd.c: 179:             case 0 : ReadOldH&=(~(0x01<<( 7 - Tier_bit ))); break ;
+[e :U 3301 ]
+[e =& _ReadOldH -> ~ << -> 1 `i - -> 7 `i -> _Tier_bit `i `uc ]
+[e $U 3299  ]
 "180
-[; ;USER_C/lcd.c: 180:         switch(Color)
-[e $U 3292  ]
+[; ;USER_C/lcd.c: 180:             case 1 : ReadOldH|=( 0x01 <<( 7 - Tier_bit )) ; break ;
+[e :U 3302 ]
+[e =| _ReadOldH -> << -> 1 `i - -> 7 `i -> _Tier_bit `i `uc ]
+[e $U 3299  ]
 "181
-[; ;USER_C/lcd.c: 181:         {
-{
+[; ;USER_C/lcd.c: 181:             case 2 : ReadOldH^=( 0x01 <<( 7 - Tier_bit )) ; break ;
+[e :U 3303 ]
+[e =^ _ReadOldH -> << -> 1 `i - -> 7 `i -> _Tier_bit `i `uc ]
+[e $U 3299  ]
 "182
-[; ;USER_C/lcd.c: 182:             case 0 : ReadOldL&=(~(0x01<<( 15 - Tier_bit ))); break ;
-[e :U 3293 ]
-[e =& _ReadOldL -> ~ << -> 1 `i - -> 15 `i -> _Tier_bit `i `uc ]
-[e $U 3291  ]
+[; ;USER_C/lcd.c: 182:             default : break ;
+[e :U 3304 ]
+[e $U 3299  ]
 "183
-[; ;USER_C/lcd.c: 183:             case 1 : ReadOldL|=( 0x01 <<( 15 - Tier_bit )) ; break ;
-[e :U 3294 ]
-[e =| _ReadOldL -> << -> 1 `i - -> 15 `i -> _Tier_bit `i `uc ]
-[e $U 3291  ]
+[; ;USER_C/lcd.c: 183:         }
+}
+[e $U 3299  ]
+[e :U 3300 ]
+[e [\ -> _Color `i , $ -> 0 `i 3301
+ , $ -> 1 `i 3302
+ , $ -> 2 `i 3303
+ 3304 ]
+[e :U 3299 ]
 "184
-[; ;USER_C/lcd.c: 184:             case 2 : ReadOldL^=( 0x01 <<( 15 - Tier_bit )) ; break ;
-[e :U 3295 ]
-[e =^ _ReadOldL -> << -> 1 `i - -> 15 `i -> _Tier_bit `i `uc ]
-[e $U 3291  ]
-"185
-[; ;USER_C/lcd.c: 185:             default : break ;
-[e :U 3296 ]
-[e $U 3291  ]
-"186
-[; ;USER_C/lcd.c: 186:         }
-}
-[e $U 3291  ]
-[e :U 3292 ]
-[e [\ -> _Color `i , $ -> 0 `i 3293
- , $ -> 1 `i 3294
- , $ -> 2 `i 3295
- 3296 ]
-[e :U 3291 ]
-"187
-[; ;USER_C/lcd.c: 187:         sendDat(ReadOldH);
+[; ;USER_C/lcd.c: 184:         sendDat(ReadOldH);
 [e ( _sendDat (1 _ReadOldH ]
-"188
-[; ;USER_C/lcd.c: 188:         sendDat(ReadOldL);
+"185
+[; ;USER_C/lcd.c: 185:         sendDat(ReadOldL);
 [e ( _sendDat (1 _ReadOldL ]
+"186
+[; ;USER_C/lcd.c: 186:     }
+}
+[e $U 3305  ]
+"187
+[; ;USER_C/lcd.c: 187:     else
+[e :U 3298 ]
+"188
+[; ;USER_C/lcd.c: 188:     {
+{
 "189
-[; ;USER_C/lcd.c: 189:     }
-}
-[e :U 3290 ]
+[; ;USER_C/lcd.c: 189:         switch(Color)
+[e $U 3307  ]
 "190
-[; ;USER_C/lcd.c: 190:     sendCom(0x30);
-[e ( _sendCom (1 -> -> 48 `i `uc ]
+[; ;USER_C/lcd.c: 190:         {
+{
 "191
-[; ;USER_C/lcd.c: 191: }
-[e :UE 3280 ]
-}
+[; ;USER_C/lcd.c: 191:             case 0 : ReadOldL&=(~(0x01<<( 15 - Tier_bit ))); break ;
+[e :U 3308 ]
+[e =& _ReadOldL -> ~ << -> 1 `i - -> 15 `i -> _Tier_bit `i `uc ]
+[e $U 3306  ]
+"192
+[; ;USER_C/lcd.c: 192:             case 1 : ReadOldL|=( 0x01 <<( 15 - Tier_bit )) ; break ;
+[e :U 3309 ]
+[e =| _ReadOldL -> << -> 1 `i - -> 15 `i -> _Tier_bit `i `uc ]
+[e $U 3306  ]
 "193
-[; ;USER_C/lcd.c: 193: void v_Lcd12864DrawLineX_f(unsigned char X0,unsigned char X1,unsigned char Y,unsigned char Color)
-[v _v_Lcd12864DrawLineX_f `(v ~T0 @X0 1 ef4`uc`uc`uc`uc ]
+[; ;USER_C/lcd.c: 193:             case 2 : ReadOldL^=( 0x01 <<( 15 - Tier_bit )) ; break ;
+[e :U 3310 ]
+[e =^ _ReadOldL -> << -> 1 `i - -> 15 `i -> _Tier_bit `i `uc ]
+[e $U 3306  ]
 "194
-[; ;USER_C/lcd.c: 194: {
+[; ;USER_C/lcd.c: 194:             default : break ;
+[e :U 3311 ]
+[e $U 3306  ]
+"195
+[; ;USER_C/lcd.c: 195:         }
+}
+[e $U 3306  ]
+[e :U 3307 ]
+[e [\ -> _Color `i , $ -> 0 `i 3308
+ , $ -> 1 `i 3309
+ , $ -> 2 `i 3310
+ 3311 ]
+[e :U 3306 ]
+"196
+[; ;USER_C/lcd.c: 196:         sendDat(ReadOldH);
+[e ( _sendDat (1 _ReadOldH ]
+"197
+[; ;USER_C/lcd.c: 197:         sendDat(ReadOldL);
+[e ( _sendDat (1 _ReadOldL ]
+"198
+[; ;USER_C/lcd.c: 198:     }
+}
+[e :U 3305 ]
+"199
+[; ;USER_C/lcd.c: 199:     sendCom(0x30);
+[e ( _sendCom (1 -> -> 48 `i `uc ]
+"200
+[; ;USER_C/lcd.c: 200: }
+[e :UE 3295 ]
+}
+"202
+[; ;USER_C/lcd.c: 202: void v_Lcd12864DrawLineX_f(unsigned char X0,unsigned char X1,unsigned char Y,unsigned char Color)
+[v _v_Lcd12864DrawLineX_f `(v ~T0 @X0 1 ef4`uc`uc`uc`uc ]
+"203
+[; ;USER_C/lcd.c: 203: {
 {
 [e :U _v_Lcd12864DrawLineX_f ]
-"193
-[; ;USER_C/lcd.c: 193: void v_Lcd12864DrawLineX_f(unsigned char X0,unsigned char X1,unsigned char Y,unsigned char Color)
+"202
+[; ;USER_C/lcd.c: 202: void v_Lcd12864DrawLineX_f(unsigned char X0,unsigned char X1,unsigned char Y,unsigned char Color)
 [v _X0 `uc ~T0 @X0 1 r1 ]
 [v _X1 `uc ~T0 @X0 1 r2 ]
 [v _Y `uc ~T0 @X0 1 r3 ]
 [v _Color `uc ~T0 @X0 1 r4 ]
-"194
-[; ;USER_C/lcd.c: 194: {
-[f ]
-"195
-[; ;USER_C/lcd.c: 195:     unsigned char Temp;
-[v _Temp `uc ~T0 @X0 1 a ]
-"196
-[; ;USER_C/lcd.c: 196:     if(X0>X1)
-[e $ ! > -> _X0 `i -> _X1 `i 3298  ]
-"197
-[; ;USER_C/lcd.c: 197:     {
-{
-"198
-[; ;USER_C/lcd.c: 198:         Temp=X1;
-[e = _Temp _X1 ]
-"199
-[; ;USER_C/lcd.c: 199:         X1=X0;
-[e = _X1 _X0 ]
-"200
-[; ;USER_C/lcd.c: 200:         X0=Temp;
-[e = _X0 _Temp ]
-"201
-[; ;USER_C/lcd.c: 201:     }
-}
-[e :U 3298 ]
-"202
-[; ;USER_C/lcd.c: 202:     for( ;X0<=X1;X0++)
-{
-[e $U 3302  ]
-[e :U 3299 ]
 "203
-[; ;USER_C/lcd.c: 203:     Draw_point(X0,Y,Color);
+[; ;USER_C/lcd.c: 203: {
+[f ]
+"204
+[; ;USER_C/lcd.c: 204:     unsigned char Temp;
+[v _Temp `uc ~T0 @X0 1 a ]
+"205
+[; ;USER_C/lcd.c: 205:     if(X0>X1)
+[e $ ! > -> _X0 `i -> _X1 `i 3313  ]
+"206
+[; ;USER_C/lcd.c: 206:     {
+{
+"207
+[; ;USER_C/lcd.c: 207:         Temp=X1;
+[e = _Temp _X1 ]
+"208
+[; ;USER_C/lcd.c: 208:         X1=X0;
+[e = _X1 _X0 ]
+"209
+[; ;USER_C/lcd.c: 209:         X0=Temp;
+[e = _X0 _Temp ]
+"210
+[; ;USER_C/lcd.c: 210:     }
+}
+[e :U 3313 ]
+"211
+[; ;USER_C/lcd.c: 211:     for( ;X0<=X1;X0++)
+{
+[e $U 3317  ]
+[e :U 3314 ]
+"212
+[; ;USER_C/lcd.c: 212:     Draw_point(X0,Y,Color);
 [e ( _Draw_point (3 , , _X0 _Y _Color ]
 [e ++ _X0 -> -> 1 `i `uc ]
-[e :U 3302 ]
-[e $ <= -> _X0 `i -> _X1 `i 3299  ]
-[e :U 3300 ]
+[e :U 3317 ]
+[e $ <= -> _X0 `i -> _X1 `i 3314  ]
+[e :U 3315 ]
 }
-"204
-[; ;USER_C/lcd.c: 204: }
-[e :UE 3297 ]
+"213
+[; ;USER_C/lcd.c: 213: }
+[e :UE 3312 ]
 }
-"205
-[; ;USER_C/lcd.c: 205: void v_Lcd12864DrawLineY_f(unsigned char X,unsigned char Y0,unsigned char Y1,unsigned char Color)
+"214
+[; ;USER_C/lcd.c: 214: void v_Lcd12864DrawLineY_f(unsigned char X,unsigned char Y0,unsigned char Y1,unsigned char Color)
 [v _v_Lcd12864DrawLineY_f `(v ~T0 @X0 1 ef4`uc`uc`uc`uc ]
-"206
-[; ;USER_C/lcd.c: 206: {
+"215
+[; ;USER_C/lcd.c: 215: {
 {
 [e :U _v_Lcd12864DrawLineY_f ]
-"205
-[; ;USER_C/lcd.c: 205: void v_Lcd12864DrawLineY_f(unsigned char X,unsigned char Y0,unsigned char Y1,unsigned char Color)
+"214
+[; ;USER_C/lcd.c: 214: void v_Lcd12864DrawLineY_f(unsigned char X,unsigned char Y0,unsigned char Y1,unsigned char Color)
 [v _X `uc ~T0 @X0 1 r1 ]
 [v _Y0 `uc ~T0 @X0 1 r2 ]
 [v _Y1 `uc ~T0 @X0 1 r3 ]
 [v _Color `uc ~T0 @X0 1 r4 ]
-"206
-[; ;USER_C/lcd.c: 206: {
-[f ]
-"207
-[; ;USER_C/lcd.c: 207:     unsigned char Temp;
-[v _Temp `uc ~T0 @X0 1 a ]
-"208
-[; ;USER_C/lcd.c: 208:     if(Y0>Y1)
-[e $ ! > -> _Y0 `i -> _Y1 `i 3304  ]
-"209
-[; ;USER_C/lcd.c: 209:     {
-{
-"210
-[; ;USER_C/lcd.c: 210:         Temp=Y1;
-[e = _Temp _Y1 ]
-"211
-[; ;USER_C/lcd.c: 211:         Y1=Y0;
-[e = _Y1 _Y0 ]
-"212
-[; ;USER_C/lcd.c: 212:         Y0=Temp;
-[e = _Y0 _Temp ]
-"213
-[; ;USER_C/lcd.c: 213:     }
-}
-[e :U 3304 ]
-"214
-[; ;USER_C/lcd.c: 214:     for( ;Y0<=Y1;Y0++)
-{
-[e $U 3308  ]
-[e :U 3305 ]
 "215
-[; ;USER_C/lcd.c: 215:     Draw_point(X,Y0,Color);
+[; ;USER_C/lcd.c: 215: {
+[f ]
+"216
+[; ;USER_C/lcd.c: 216:     unsigned char Temp;
+[v _Temp `uc ~T0 @X0 1 a ]
+"217
+[; ;USER_C/lcd.c: 217:     if(Y0>Y1)
+[e $ ! > -> _Y0 `i -> _Y1 `i 3319  ]
+"218
+[; ;USER_C/lcd.c: 218:     {
+{
+"219
+[; ;USER_C/lcd.c: 219:         Temp=Y1;
+[e = _Temp _Y1 ]
+"220
+[; ;USER_C/lcd.c: 220:         Y1=Y0;
+[e = _Y1 _Y0 ]
+"221
+[; ;USER_C/lcd.c: 221:         Y0=Temp;
+[e = _Y0 _Temp ]
+"222
+[; ;USER_C/lcd.c: 222:     }
+}
+[e :U 3319 ]
+"223
+[; ;USER_C/lcd.c: 223:     for( ;Y0<=Y1;Y0++)
+{
+[e $U 3323  ]
+[e :U 3320 ]
+"224
+[; ;USER_C/lcd.c: 224:     Draw_point(X,Y0,Color);
 [e ( _Draw_point (3 , , _X _Y0 _Color ]
 [e ++ _Y0 -> -> 1 `i `uc ]
-[e :U 3308 ]
-[e $ <= -> _Y0 `i -> _Y1 `i 3305  ]
-[e :U 3306 ]
+[e :U 3323 ]
+[e $ <= -> _Y0 `i -> _Y1 `i 3320  ]
+[e :U 3321 ]
 }
-"216
-[; ;USER_C/lcd.c: 216: }
-[e :UE 3303 ]
+"225
+[; ;USER_C/lcd.c: 225: }
+[e :UE 3318 ]
 }

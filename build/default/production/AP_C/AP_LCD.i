@@ -16,6 +16,7 @@ extern void display_char(int y, int x, int char_length, unsigned char *p);
 extern void LCD_Draw_Two_Dot(unsigned char StartX,unsigned char StartY,unsigned char EndX,unsigned char EndY,unsigned char Color);
 extern void LCD_DrawSineWave(void);
 extern void LCD_DrawCoseWave(void);
+extern void GRam_Clear(void);
 # 1 "AP_C/AP_LCD.c" 2
 
 # 1 "AP_C/../USER_H/lcd.h" 1
@@ -37211,4 +37212,26 @@ void LCD_DrawCoseWave(void)
   xn=i;
   yn=yi;
  }
+}
+void GRam_Clear(void)
+{
+    char a=0,b=0;
+    sendCom(0x34);
+    for(a=0;a<1;a++)
+    {
+        if(a==0)
+        {
+            sendCom(0x80);
+        }
+        else
+        {
+            sendCom(0X88);
+        }
+        for(b=0;b<16;b++)
+        {
+            sendDat(0x00);
+            sendDat(0x00);
+        }
+    }
+    sendCom(0x36);
 }

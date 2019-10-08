@@ -176,3 +176,25 @@ void LCD_DrawCoseWave(void)	  //ª≠”‡œ“œﬂ
 		yn=yi;
 	}
 }
+void GRam_Clear(void)
+{
+    char a=0,b=0;
+    sendCom(0x34);
+    for(a=0;a<1;a++)
+    {
+        if(a==0)
+        {
+            sendCom(0x80);
+        }
+        else
+        {
+            sendCom(0X88);
+        }
+        for(b=0;b<16;b++)
+        {
+            sendDat(0x00);
+            sendDat(0x00);
+        }
+    }
+    sendCom(0x36);
+}

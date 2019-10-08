@@ -36562,6 +36562,7 @@ extern void display_char(int y, int x, int char_length, unsigned char *p);
 extern void LCD_Draw_Two_Dot(unsigned char StartX,unsigned char StartY,unsigned char EndX,unsigned char EndY,unsigned char Color);
 extern void LCD_DrawSineWave(void);
 extern void LCD_DrawCoseWave(void);
+extern void GRam_Clear(void);
 # 47 "main.c" 2
 
 
@@ -36597,6 +36598,8 @@ void main(void) {
         sendDat(0xa1);
         sendDat(0xF0);
         display_char(2,9,4,"ÄãºÃÄúºÃ");
+        GRam_Clear();
+        _delay((unsigned long)((1000)*(1000000/4000.0)));
         LCD_Draw_Two_Dot( 12, 0, 127, 63, 1 );
 
 

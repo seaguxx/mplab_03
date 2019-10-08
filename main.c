@@ -87,6 +87,8 @@ void main(void) {
         sendDat(0xa1);
         sendDat(0xF0);
         display_char(2,9,4,"ÄãºÃÄúºÃ");
+        GRam_Clear();
+        __delay_ms(1000);
         LCD_Draw_Two_Dot( 12,  0, 127, 63, 1 );
         //        position(2, 1);
         //        sendDat('H');

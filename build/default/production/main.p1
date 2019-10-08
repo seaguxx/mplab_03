@@ -57,6 +57,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "26 ./AP_H/ap_lcd.h
 [; ;./AP_H/ap_lcd.h: 26: extern void display_char(int y, int x, int char_length, unsigned char *p);
 [v _display_char `(v ~T0 @X0 0 ef4`i`i`i`*uc ]
+"30
+[; ;./AP_H/ap_lcd.h: 30: extern void GRam_Clear(void);
+[v _GRam_Clear `(v ~T0 @X0 0 ef ]
 "27
 [; ;./AP_H/ap_lcd.h: 27: extern void LCD_Draw_Two_Dot(unsigned char StartX,unsigned char StartY,unsigned char EndX,unsigned char EndY,unsigned char Color);
 [v _LCD_Draw_Two_Dot `(v ~T0 @X0 0 ef5`uc`uc`uc`uc`uc ]
@@ -3166,19 +3169,25 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 89:         display_char(2,9,4,"ÄãºÃÄúºÃ");
 [e ( _display_char (4 , , , -> 2 `i -> 9 `i -> 4 `i :s 2C ]
 "90
-[; ;main.c: 90:         LCD_Draw_Two_Dot( 12, 0, 127, 63, 1 );
+[; ;main.c: 90:         GRam_Clear();
+[e ( _GRam_Clear ..  ]
+"91
+[; ;main.c: 91:         _delay((unsigned long)((1000)*(1000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+"92
+[; ;main.c: 92:         LCD_Draw_Two_Dot( 12, 0, 127, 63, 1 );
 [e ( _LCD_Draw_Two_Dot (4 , , , , -> -> 12 `i `uc -> -> 0 `i `uc -> -> 127 `i `uc -> -> 63 `i `uc -> -> 1 `i `uc ]
-"95
-[; ;main.c: 95:         ledtest();
+"97
+[; ;main.c: 97:         ledtest();
 [e ( _ledtest ..  ]
-"96
-[; ;main.c: 96:     }
+"98
+[; ;main.c: 98:     }
 }
 [e :U 3220 ]
 [e $U 3221  ]
 [e :U 3222 ]
-"97
-[; ;main.c: 97: }
+"99
+[; ;main.c: 99: }
 [e :UE 3207 ]
 }
 [a 1C 100 100 100 100 100 100 0 ]

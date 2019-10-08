@@ -36662,25 +36662,32 @@ void LcdString(unsigned char *p) {
 unsigned char Readspi(void)
 {
     char i = 0;
-    unsigned char dat=0xff;
+    unsigned char dat=0x00;
 
     for (i = 0; i < 8; i++) {
 
+        do { TRISCbits.TRISC4 = 1; } while(0);
+
         do { LATCbits.LATC4 = 1; } while(0);
+
         do { LATCbits.LATC3 = 1; } while(0);
         _delay((unsigned long)((2)*(1000000/4000.0)));
         do { LATCbits.LATC3 = 0; } while(0);
         _delay((unsigned long)((2)*(1000000/4000.0)));
-        if(PORTCbits.RC4==1)
+        if(PORTCbits.RC4==1 )
         {
             dat=dat|0x01;
+            do { LATBbits.LATB7 = 0; } while(0);
         }
         else
         {
             dat=dat;
+            do { LATBbits.LATB7 = 1; } while(0);
+
         }
         dat = dat << 1;
     }
+    do { TRISCbits.TRISC4 = 0; } while(0);
     return (dat);
 }
 unsigned char LCD_read_arm(void)
@@ -36688,9 +36695,11 @@ unsigned char LCD_read_arm(void)
     unsigned char a1=0x00;
     unsigned char a2=0x00;
     unsigned char a3=0x00;
+    do { LATAbits.LATA5 = 1; } while(0);
     Spi8b(0xfe);
     a1=Readspi();
     a2=Readspi();
+
     a3=(a1&0xf0)|(a2>>4);
     return (a3);
 }
