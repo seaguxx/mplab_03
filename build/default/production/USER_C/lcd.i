@@ -36543,6 +36543,12 @@ extern void position(char x, char y);
 extern void LcdString(unsigned char *p);
 extern void sendDat(unsigned char dat);
 extern void sendCom(unsigned char com);
+
+extern unsigned char Readspi(void);
+extern unsigned char LCD_read_arm(void);
+extern void Draw_point(unsigned char X,unsigned char Y,unsigned char Color);
+extern void v_Lcd12864DrawLineX_f(unsigned char X0,unsigned char X1,unsigned char Y,unsigned char Color);
+extern void v_Lcd12864DrawLineY_f(unsigned char X,unsigned char Y0,unsigned char Y1,unsigned char Color);
 # 1 "USER_C/lcd.c" 2
 
 
@@ -36652,4 +36658,111 @@ void LcdString(unsigned char *p) {
     }
 
 
+}
+unsigned char Readspi(void)
+{
+    char i = 0;
+    unsigned char dat=0xff;
+
+    for (i = 0; i < 8; i++) {
+
+        do { LATCbits.LATC4 = 1; } while(0);
+        do { LATCbits.LATC3 = 1; } while(0);
+        _delay((unsigned long)((2)*(1000000/4000.0)));
+        do { LATCbits.LATC3 = 0; } while(0);
+        _delay((unsigned long)((2)*(1000000/4000.0)));
+        if(PORTCbits.RC4==1)
+        {
+            dat=dat|0x01;
+        }
+        else
+        {
+            dat=dat;
+        }
+        dat = dat << 1;
+    }
+    return (dat);
+}
+unsigned char LCD_read_arm(void)
+{
+    unsigned char a1=0x00;
+    unsigned char a2=0x00;
+    unsigned char a3=0x00;
+    Spi8b(0xfe);
+    a1=Readspi();
+    a2=Readspi();
+    a3=(a1&0xf0)|(a2>>4);
+    return (a3);
+}
+void Draw_point(unsigned char X,unsigned char Y,unsigned char Color)
+{
+    unsigned char Row, Tier, Tier_bit;
+    unsigned char ReadOldH, ReadOldL;
+    sendCom(0x34);
+    sendCom(0x36);
+    Tier=X>>4;
+    Tier_bit=X&0x0f;
+
+    if(Y<32) { Row=Y; }
+    else { Row= Y-32; Tier+=8; }
+
+    sendCom(Row+0x80);
+    sendCom(Tier+0x80);
+
+    LCD_read_arm();
+    ReadOldH=LCD_read_arm();
+    ReadOldL=LCD_read_arm();
+
+    sendCom(Row+0x80);
+    sendCom(Tier+0x80);
+    if(Tier_bit<8 )
+    {
+        switch(Color)
+        {
+            case 0 : ReadOldH&=(~(0x01<<( 7 - Tier_bit ))); break ;
+            case 1 : ReadOldH|=( 0x01 <<( 7 - Tier_bit )) ; break ;
+            case 2 : ReadOldH^=( 0x01 <<( 7 - Tier_bit )) ; break ;
+            default : break ;
+        }
+        sendDat(ReadOldH);
+        sendDat(ReadOldL);
+    }
+    else
+    {
+        switch(Color)
+        {
+            case 0 : ReadOldL&=(~(0x01<<( 15 - Tier_bit ))); break ;
+            case 1 : ReadOldL|=( 0x01 <<( 15 - Tier_bit )) ; break ;
+            case 2 : ReadOldL^=( 0x01 <<( 15 - Tier_bit )) ; break ;
+            default : break ;
+        }
+        sendDat(ReadOldH);
+        sendDat(ReadOldL);
+    }
+    sendCom(0x30);
+}
+
+void v_Lcd12864DrawLineX_f(unsigned char X0,unsigned char X1,unsigned char Y,unsigned char Color)
+{
+    unsigned char Temp;
+    if(X0>X1)
+    {
+        Temp=X1;
+        X1=X0;
+        X0=Temp;
+    }
+    for( ;X0<=X1;X0++)
+    Draw_point(X0,Y,Color);
+}
+void v_Lcd12864DrawLineY_f(unsigned char X,unsigned char Y0,unsigned char Y1,unsigned char Color)
+{
+    unsigned char Temp;
+    if(Y0>Y1)
+    {
+        Temp=Y1;
+        Y1=Y0;
+        Y0=Temp;
+    }
+    for( ;Y0<=Y1;Y0++)
+    Draw_point(X,Y0,Color);
 }

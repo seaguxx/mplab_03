@@ -2,13 +2,31 @@ Version 4.0 HI-TECH Software Intermediate Code
 "31 AP_C/../USER_H/lcd.h
 [; ;AP_C/../USER_H/lcd.h: 31: extern void sendCom(unsigned char com);
 [v _sendCom `(v ~T0 @X0 0 ef1`uc ]
-[v F22560 `(v ~T0 @X0 1 tf1`ul ]
+[v F22568 `(v ~T0 @X0 1 tf1`ul ]
 "183 D:\XC8\pic\include\pic18.h
-[v __delay `JF22560 ~T0 @X0 0 e ]
+[v __delay `JF22568 ~T0 @X0 0 e ]
 [p i __delay ]
 "30 AP_C/../USER_H/lcd.h
 [; ;AP_C/../USER_H/lcd.h: 30: extern void sendDat(unsigned char dat);
 [v _sendDat `(v ~T0 @X0 0 ef1`uc ]
+"37
+[; ;AP_C/../USER_H/lcd.h: 37: extern void v_Lcd12864DrawLineY_f(unsigned char X,unsigned char Y0,unsigned char Y1,unsigned char Color);
+[v _v_Lcd12864DrawLineY_f `(v ~T0 @X0 0 ef4`uc`uc`uc`uc ]
+"36
+[; ;AP_C/../USER_H/lcd.h: 36: extern void v_Lcd12864DrawLineX_f(unsigned char X0,unsigned char X1,unsigned char Y,unsigned char Color);
+[v _v_Lcd12864DrawLineX_f `(v ~T0 @X0 0 ef4`uc`uc`uc`uc ]
+"73 D:\XC8\pic\include\c99\stdlib.h
+[; ;D:\XC8\pic\include\c99\stdlib.h: 73: int abs (int);
+[v _abs `(i ~T0 @X0 0 ef1`i ]
+"35 AP_C/../USER_H/lcd.h
+[; ;AP_C/../USER_H/lcd.h: 35: extern void Draw_point(unsigned char X,unsigned char Y,unsigned char Color);
+[v _Draw_point `(v ~T0 @X0 0 ef3`uc`uc`uc ]
+"555 D:\XC8\pic\include\c99\math.h
+[; ;D:\XC8\pic\include\c99\math.h: 555: float sinf(float);
+[v _sinf `(f ~T0 @X0 0 ef1`f ]
+"230
+[; ;D:\XC8\pic\include\c99\math.h: 230: float cosf(float);
+[v _cosf `(f ~T0 @X0 0 ef1`f ]
 "272 D:\XC8\pic\include\pic18f25k83.h
 [; ;D:\XC8\pic\include\pic18f25k83.h: 272: __asm("CIOCON equ 03700h");
 [; <" CIOCON equ 03700h ;# ">
@@ -3033,8 +3051,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "71986
 [; ;D:\XC8\pic\include\pic18f25k83.h: 71986: __asm("TOSU equ 03FFFh");
 [; <" TOSU equ 03FFFh ;# ">
-"3 AP_C/AP_LCD.c
-[; ;AP_C/AP_LCD.c: 3: void display_char(int y, int x, int char_length, unsigned char *p) {
+"4 AP_C/AP_LCD.c
+[; ;AP_C/AP_LCD.c: 4: void display_char(int y, int x, int char_length, unsigned char *p) {
 [v _display_char `(v ~T0 @X0 1 ef4`i`i`i`*uc ]
 {
 [e :U _display_char ]
@@ -3043,55 +3061,55 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _char_length `i ~T0 @X0 1 r3 ]
 [v _p `*uc ~T0 @X0 1 r4 ]
 [f ]
-"4
-[; ;AP_C/AP_LCD.c: 4:     char i = 0;
+"5
+[; ;AP_C/AP_LCD.c: 5:     char i = 0;
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-"5
-[; ;AP_C/AP_LCD.c: 5:     sendCom(0x30);
-[e ( _sendCom (1 -> -> 48 `i `uc ]
 "6
-[; ;AP_C/AP_LCD.c: 6:     _delay((unsigned long)((10)*(1000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
-"8
-[; ;AP_C/AP_LCD.c: 8:     _delay((unsigned long)((10)*(1000000/4000000.0)));
+[; ;AP_C/AP_LCD.c: 6:     sendCom(0x30);
+[e ( _sendCom (1 -> -> 48 `i `uc ]
+"7
+[; ;AP_C/AP_LCD.c: 7:     _delay((unsigned long)((10)*(1000000/4000000.0)));
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
 "9
-[; ;AP_C/AP_LCD.c: 9:     sendCom(0x80 + (y - 1)*(0x10)+(x - 1));
-[e ( _sendCom (1 -> + + -> 128 `i * - _y -> 1 `i -> 16 `i - _x -> 1 `i `uc ]
+[; ;AP_C/AP_LCD.c: 9:     _delay((unsigned long)((10)*(1000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
 "10
-[; ;AP_C/AP_LCD.c: 10:     for (i = 0; i < char_length; i++) {
+[; ;AP_C/AP_LCD.c: 10:     sendCom(0x80 + (y - 1)*(0x10)+(x - 1));
+[e ( _sendCom (1 -> + + -> 128 `i * - _y -> 1 `i -> 16 `i - _x -> 1 `i `uc ]
+"11
+[; ;AP_C/AP_LCD.c: 11:     for (i = 0; i < char_length; i++) {
 {
 [e = _i -> -> 0 `i `uc ]
 [e $U 3210  ]
 [e :U 3207 ]
 {
-"11
-[; ;AP_C/AP_LCD.c: 11:         sendDat(*p);
-[e ( _sendDat (1 *U _p ]
 "12
-[; ;AP_C/AP_LCD.c: 12:         p++;
-[e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
-"13
-[; ;AP_C/AP_LCD.c: 13:         sendDat(*p);
+[; ;AP_C/AP_LCD.c: 12:         sendDat(*p);
 [e ( _sendDat (1 *U _p ]
-"14
-[; ;AP_C/AP_LCD.c: 14:         p++;
+"13
+[; ;AP_C/AP_LCD.c: 13:         p++;
 [e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
+"14
+[; ;AP_C/AP_LCD.c: 14:         sendDat(*p);
+[e ( _sendDat (1 *U _p ]
 "15
-[; ;AP_C/AP_LCD.c: 15:     }
+[; ;AP_C/AP_LCD.c: 15:         p++;
+[e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
+"16
+[; ;AP_C/AP_LCD.c: 16:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
 [e :U 3210 ]
 [e $ < -> _i `i _char_length 3207  ]
 [e :U 3208 ]
 }
-"16
-[; ;AP_C/AP_LCD.c: 16: }
+"17
+[; ;AP_C/AP_LCD.c: 17: }
 [e :UE 3206 ]
 }
-"18
-[; ;AP_C/AP_LCD.c: 18: void display_3232(int y, int x, char *p) {
+"19
+[; ;AP_C/AP_LCD.c: 19: void display_3232(int y, int x, char *p) {
 [v _display_3232 `(v ~T0 @X0 1 ef3`i`i`*uc ]
 {
 [e :U _display_3232 ]
@@ -3099,64 +3117,64 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _x `i ~T0 @X0 1 r2 ]
 [v _p `*uc ~T0 @X0 1 r3 ]
 [f ]
-"19
-[; ;AP_C/AP_LCD.c: 19:     int i, j;
+"20
+[; ;AP_C/AP_LCD.c: 20:     int i, j;
 [v _i `i ~T0 @X0 1 a ]
 [v _j `i ~T0 @X0 1 a ]
-"20
-[; ;AP_C/AP_LCD.c: 20:     sendCom(0x36);
-[e ( _sendCom (1 -> -> 54 `i `uc ]
 "21
-[; ;AP_C/AP_LCD.c: 21:     _delay((unsigned long)((10)*(1000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
+[; ;AP_C/AP_LCD.c: 21:     sendCom(0x36);
+[e ( _sendCom (1 -> -> 54 `i `uc ]
 "22
-[; ;AP_C/AP_LCD.c: 22:     for (j = 0; j < 32; j++) {
+[; ;AP_C/AP_LCD.c: 22:     _delay((unsigned long)((10)*(1000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
+"23
+[; ;AP_C/AP_LCD.c: 23:     for (j = 0; j < 32; j++) {
 {
 [e = _j -> 0 `i ]
 [e $ < _j -> 32 `i 3212  ]
 [e $U 3213  ]
 [e :U 3212 ]
 {
-"23
-[; ;AP_C/AP_LCD.c: 23:         sendCom(0x80 + (y - 1) + j);
-[e ( _sendCom (1 -> + + -> 128 `i - _y -> 1 `i _j `uc ]
 "24
-[; ;AP_C/AP_LCD.c: 24:         sendCom(0x80 + (x - 1));
-[e ( _sendCom (1 -> + -> 128 `i - _x -> 1 `i `uc ]
+[; ;AP_C/AP_LCD.c: 24:         sendCom(0x80 + (y - 1) + j);
+[e ( _sendCom (1 -> + + -> 128 `i - _y -> 1 `i _j `uc ]
 "25
-[; ;AP_C/AP_LCD.c: 25:         for (i = 0; i < 4; i++) {
+[; ;AP_C/AP_LCD.c: 25:         sendCom(0x80 + (x - 1));
+[e ( _sendCom (1 -> + -> 128 `i - _x -> 1 `i `uc ]
+"26
+[; ;AP_C/AP_LCD.c: 26:         for (i = 0; i < 4; i++) {
 {
 [e = _i -> 0 `i ]
 [e $ < _i -> 4 `i 3215  ]
 [e $U 3216  ]
 [e :U 3215 ]
 {
-"26
-[; ;AP_C/AP_LCD.c: 26:             sendDat(*p);
-[e ( _sendDat (1 -> *U _p `uc ]
 "27
-[; ;AP_C/AP_LCD.c: 27:             p++;
-[e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
+[; ;AP_C/AP_LCD.c: 27:             sendDat(*p);
+[e ( _sendDat (1 -> *U _p `uc ]
 "28
-[; ;AP_C/AP_LCD.c: 28:         }
+[; ;AP_C/AP_LCD.c: 28:             p++;
+[e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
+"29
+[; ;AP_C/AP_LCD.c: 29:         }
 }
 [e ++ _i -> 1 `i ]
 [e $ < _i -> 4 `i 3215  ]
 [e :U 3216 ]
 }
-"29
-[; ;AP_C/AP_LCD.c: 29:     }
+"30
+[; ;AP_C/AP_LCD.c: 30:     }
 }
 [e ++ _j -> 1 `i ]
 [e $ < _j -> 32 `i 3212  ]
 [e :U 3213 ]
 }
-"30
-[; ;AP_C/AP_LCD.c: 30: }
+"31
+[; ;AP_C/AP_LCD.c: 31: }
 [e :UE 3211 ]
 }
-"32
-[; ;AP_C/AP_LCD.c: 32: void display_1632(int y, int x, char *p) {
+"33
+[; ;AP_C/AP_LCD.c: 33: void display_1632(int y, int x, char *p) {
 [v _display_1632 `(v ~T0 @X0 1 ef3`i`i`*uc ]
 {
 [e :U _display_1632 ]
@@ -3164,61 +3182,61 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _x `i ~T0 @X0 1 r2 ]
 [v _p `*uc ~T0 @X0 1 r3 ]
 [f ]
-"33
-[; ;AP_C/AP_LCD.c: 33:     int i, j;
+"34
+[; ;AP_C/AP_LCD.c: 34:     int i, j;
 [v _i `i ~T0 @X0 1 a ]
 [v _j `i ~T0 @X0 1 a ]
-"34
-[; ;AP_C/AP_LCD.c: 34:     sendCom(0x36);
-[e ( _sendCom (1 -> -> 54 `i `uc ]
 "35
-[; ;AP_C/AP_LCD.c: 35:     for (j = 0; j < 32; j++) {
+[; ;AP_C/AP_LCD.c: 35:     sendCom(0x36);
+[e ( _sendCom (1 -> -> 54 `i `uc ]
+"36
+[; ;AP_C/AP_LCD.c: 36:     for (j = 0; j < 32; j++) {
 {
 [e = _j -> 0 `i ]
 [e $ < _j -> 32 `i 3219  ]
 [e $U 3220  ]
 [e :U 3219 ]
 {
-"36
-[; ;AP_C/AP_LCD.c: 36:         sendCom(0x80 + (y - 1) + j);
-[e ( _sendCom (1 -> + + -> 128 `i - _y -> 1 `i _j `uc ]
 "37
-[; ;AP_C/AP_LCD.c: 37:         sendCom(0x80 + (x - 1));
-[e ( _sendCom (1 -> + -> 128 `i - _x -> 1 `i `uc ]
+[; ;AP_C/AP_LCD.c: 37:         sendCom(0x80 + (y - 1) + j);
+[e ( _sendCom (1 -> + + -> 128 `i - _y -> 1 `i _j `uc ]
 "38
-[; ;AP_C/AP_LCD.c: 38:         for (i = 0; i < 2; i++) {
+[; ;AP_C/AP_LCD.c: 38:         sendCom(0x80 + (x - 1));
+[e ( _sendCom (1 -> + -> 128 `i - _x -> 1 `i `uc ]
+"39
+[; ;AP_C/AP_LCD.c: 39:         for (i = 0; i < 2; i++) {
 {
 [e = _i -> 0 `i ]
 [e $ < _i -> 2 `i 3222  ]
 [e $U 3223  ]
 [e :U 3222 ]
 {
-"39
-[; ;AP_C/AP_LCD.c: 39:             sendDat(*p);
-[e ( _sendDat (1 -> *U _p `uc ]
 "40
-[; ;AP_C/AP_LCD.c: 40:             p++;
-[e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
+[; ;AP_C/AP_LCD.c: 40:             sendDat(*p);
+[e ( _sendDat (1 -> *U _p `uc ]
 "41
-[; ;AP_C/AP_LCD.c: 41:         }
+[; ;AP_C/AP_LCD.c: 41:             p++;
+[e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
+"42
+[; ;AP_C/AP_LCD.c: 42:         }
 }
 [e ++ _i -> 1 `i ]
 [e $ < _i -> 2 `i 3222  ]
 [e :U 3223 ]
 }
-"42
-[; ;AP_C/AP_LCD.c: 42:     }
+"43
+[; ;AP_C/AP_LCD.c: 43:     }
 }
 [e ++ _j -> 1 `i ]
 [e $ < _j -> 32 `i 3219  ]
 [e :U 3220 ]
 }
-"43
-[; ;AP_C/AP_LCD.c: 43: }
+"44
+[; ;AP_C/AP_LCD.c: 44: }
 [e :UE 3218 ]
 }
-"45
-[; ;AP_C/AP_LCD.c: 45: void display_12864(int y, int x, char *p) {
+"46
+[; ;AP_C/AP_LCD.c: 46: void display_12864(int y, int x, char *p) {
 [v _display_12864 `(v ~T0 @X0 1 ef3`i`i`*uc ]
 {
 [e :U _display_12864 ]
@@ -3226,121 +3244,467 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _x `i ~T0 @X0 1 r2 ]
 [v _p `*uc ~T0 @X0 1 r3 ]
 [f ]
-"46
-[; ;AP_C/AP_LCD.c: 46:     int i, j;
+"47
+[; ;AP_C/AP_LCD.c: 47:     int i, j;
 [v _i `i ~T0 @X0 1 a ]
 [v _j `i ~T0 @X0 1 a ]
-"47
-[; ;AP_C/AP_LCD.c: 47:     sendCom(0x36);
-[e ( _sendCom (1 -> -> 54 `i `uc ]
 "48
-[; ;AP_C/AP_LCD.c: 48:     _delay((unsigned long)((10)*(1000000/4000000.0)));
+[; ;AP_C/AP_LCD.c: 48:     sendCom(0x36);
+[e ( _sendCom (1 -> -> 54 `i `uc ]
+"49
+[; ;AP_C/AP_LCD.c: 49:     _delay((unsigned long)((10)*(1000000/4000000.0)));
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
-"50
-[; ;AP_C/AP_LCD.c: 50:     for (j = 0; j < 32; j++) {
+"51
+[; ;AP_C/AP_LCD.c: 51:     for (j = 0; j < 32; j++) {
 {
 [e = _j -> 0 `i ]
 [e $ < _j -> 32 `i 3226  ]
 [e $U 3227  ]
 [e :U 3226 ]
 {
-"51
-[; ;AP_C/AP_LCD.c: 51:         sendCom(0x80 + (y - 1) + j);
-[e ( _sendCom (1 -> + + -> 128 `i - _y -> 1 `i _j `uc ]
 "52
-[; ;AP_C/AP_LCD.c: 52:         sendCom(0x80 + (x - 1));
-[e ( _sendCom (1 -> + -> 128 `i - _x -> 1 `i `uc ]
+[; ;AP_C/AP_LCD.c: 52:         sendCom(0x80 + (y - 1) + j);
+[e ( _sendCom (1 -> + + -> 128 `i - _y -> 1 `i _j `uc ]
 "53
-[; ;AP_C/AP_LCD.c: 53:         for (i = 0; i < 8; i++)
+[; ;AP_C/AP_LCD.c: 53:         sendCom(0x80 + (x - 1));
+[e ( _sendCom (1 -> + -> 128 `i - _x -> 1 `i `uc ]
+"54
+[; ;AP_C/AP_LCD.c: 54:         for (i = 0; i < 8; i++)
 {
 [e = _i -> 0 `i ]
 [e $ < _i -> 8 `i 3229  ]
 [e $U 3230  ]
 [e :U 3229 ]
-"54
-[; ;AP_C/AP_LCD.c: 54:         {
-{
 "55
-[; ;AP_C/AP_LCD.c: 55:             sendDat(*p);
-[e ( _sendDat (1 -> *U _p `uc ]
+[; ;AP_C/AP_LCD.c: 55:         {
+{
 "56
-[; ;AP_C/AP_LCD.c: 56:             p++;
-[e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
-"57
-[; ;AP_C/AP_LCD.c: 57:             sendDat(*p);
+[; ;AP_C/AP_LCD.c: 56:             sendDat(*p);
 [e ( _sendDat (1 -> *U _p `uc ]
-"58
-[; ;AP_C/AP_LCD.c: 58:             p++;
+"57
+[; ;AP_C/AP_LCD.c: 57:             p++;
 [e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
+"58
+[; ;AP_C/AP_LCD.c: 58:             sendDat(*p);
+[e ( _sendDat (1 -> *U _p `uc ]
 "59
-[; ;AP_C/AP_LCD.c: 59:         }
+[; ;AP_C/AP_LCD.c: 59:             p++;
+[e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
+"60
+[; ;AP_C/AP_LCD.c: 60:         }
 }
 [e ++ _i -> 1 `i ]
 [e $ < _i -> 8 `i 3229  ]
 [e :U 3230 ]
 }
-"60
-[; ;AP_C/AP_LCD.c: 60:     }
+"61
+[; ;AP_C/AP_LCD.c: 61:     }
 }
 [e ++ _j -> 1 `i ]
 [e $ < _j -> 32 `i 3226  ]
 [e :U 3227 ]
 }
-"61
-[; ;AP_C/AP_LCD.c: 61:     sendCom(0x36);
-[e ( _sendCom (1 -> -> 54 `i `uc ]
 "62
-[; ;AP_C/AP_LCD.c: 62:     _delay((unsigned long)((10)*(1000000/4000000.0)));
+[; ;AP_C/AP_LCD.c: 62:     sendCom(0x36);
+[e ( _sendCom (1 -> -> 54 `i `uc ]
+"63
+[; ;AP_C/AP_LCD.c: 63:     _delay((unsigned long)((10)*(1000000/4000000.0)));
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
-"64
-[; ;AP_C/AP_LCD.c: 64:     for (j = 0; j < 32; j++) {
+"65
+[; ;AP_C/AP_LCD.c: 65:     for (j = 0; j < 32; j++) {
 {
 [e = _j -> 0 `i ]
 [e $ < _j -> 32 `i 3232  ]
 [e $U 3233  ]
 [e :U 3232 ]
 {
-"65
-[; ;AP_C/AP_LCD.c: 65:         sendCom(0x80 + (y - 1) + j);
-[e ( _sendCom (1 -> + + -> 128 `i - _y -> 1 `i _j `uc ]
 "66
-[; ;AP_C/AP_LCD.c: 66:         sendCom(0x80 + (x - 1) + 8);
-[e ( _sendCom (1 -> + + -> 128 `i - _x -> 1 `i -> 8 `i `uc ]
+[; ;AP_C/AP_LCD.c: 66:         sendCom(0x80 + (y - 1) + j);
+[e ( _sendCom (1 -> + + -> 128 `i - _y -> 1 `i _j `uc ]
 "67
-[; ;AP_C/AP_LCD.c: 67:         for (i = 0; i < 8; i++) {
+[; ;AP_C/AP_LCD.c: 67:         sendCom(0x80 + (x - 1) + 8);
+[e ( _sendCom (1 -> + + -> 128 `i - _x -> 1 `i -> 8 `i `uc ]
+"68
+[; ;AP_C/AP_LCD.c: 68:         for (i = 0; i < 8; i++) {
 {
 [e = _i -> 0 `i ]
 [e $ < _i -> 8 `i 3235  ]
 [e $U 3236  ]
 [e :U 3235 ]
 {
-"68
-[; ;AP_C/AP_LCD.c: 68:             sendDat(*p);
-[e ( _sendDat (1 -> *U _p `uc ]
 "69
-[; ;AP_C/AP_LCD.c: 69:             p++;
-[e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
-"70
-[; ;AP_C/AP_LCD.c: 70:             sendDat(*p);
+[; ;AP_C/AP_LCD.c: 69:             sendDat(*p);
 [e ( _sendDat (1 -> *U _p `uc ]
-"71
-[; ;AP_C/AP_LCD.c: 71:             p++;
+"70
+[; ;AP_C/AP_LCD.c: 70:             p++;
 [e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
+"71
+[; ;AP_C/AP_LCD.c: 71:             sendDat(*p);
+[e ( _sendDat (1 -> *U _p `uc ]
 "72
-[; ;AP_C/AP_LCD.c: 72:         }
+[; ;AP_C/AP_LCD.c: 72:             p++;
+[e ++ _p * -> -> 1 `i `x -> -> # *U _p `i `x ]
+"73
+[; ;AP_C/AP_LCD.c: 73:         }
 }
 [e ++ _i -> 1 `i ]
 [e $ < _i -> 8 `i 3235  ]
 [e :U 3236 ]
 }
-"73
-[; ;AP_C/AP_LCD.c: 73:     }
+"74
+[; ;AP_C/AP_LCD.c: 74:     }
 }
 [e ++ _j -> 1 `i ]
 [e $ < _j -> 32 `i 3232  ]
 [e :U 3233 ]
 }
-"74
-[; ;AP_C/AP_LCD.c: 74: }
+"75
+[; ;AP_C/AP_LCD.c: 75: }
 [e :UE 3225 ]
+}
+"77
+[; ;AP_C/AP_LCD.c: 77: void LCD_Draw_Two_Dot(unsigned char StartX,unsigned char StartY,unsigned char EndX,unsigned char EndY,unsigned char Color)
+[v _LCD_Draw_Two_Dot `(v ~T0 @X0 1 ef5`uc`uc`uc`uc`uc ]
+"78
+[; ;AP_C/AP_LCD.c: 78: {
+{
+[e :U _LCD_Draw_Two_Dot ]
+"77
+[; ;AP_C/AP_LCD.c: 77: void LCD_Draw_Two_Dot(unsigned char StartX,unsigned char StartY,unsigned char EndX,unsigned char EndY,unsigned char Color)
+[v _StartX `uc ~T0 @X0 1 r1 ]
+[v _StartY `uc ~T0 @X0 1 r2 ]
+[v _EndX `uc ~T0 @X0 1 r3 ]
+[v _EndY `uc ~T0 @X0 1 r4 ]
+[v _Color `uc ~T0 @X0 1 r5 ]
+"78
+[; ;AP_C/AP_LCD.c: 78: {
+[f ]
+"79
+[; ;AP_C/AP_LCD.c: 79:     int t,distance;
+[v _t `i ~T0 @X0 1 a ]
+[v _distance `i ~T0 @X0 1 a ]
+"80
+[; ;AP_C/AP_LCD.c: 80:     int x=0,y=0,delta_x,delta_y;
+[v _x `i ~T0 @X0 1 a ]
+[e = _x -> 0 `i ]
+[v _y `i ~T0 @X0 1 a ]
+[e = _y -> 0 `i ]
+[v _delta_x `i ~T0 @X0 1 a ]
+[v _delta_y `i ~T0 @X0 1 a ]
+"81
+[; ;AP_C/AP_LCD.c: 81:     char incx,incy;
+[v _incx `uc ~T0 @X0 1 a ]
+[v _incy `uc ~T0 @X0 1 a ]
+"83
+[; ;AP_C/AP_LCD.c: 83:     delta_x=EndX-StartX;
+[e = _delta_x - -> _EndX `i -> _StartX `i ]
+"84
+[; ;AP_C/AP_LCD.c: 84:     delta_y=EndY-StartY;
+[e = _delta_y - -> _EndY `i -> _StartY `i ]
+"86
+[; ;AP_C/AP_LCD.c: 86:     if(delta_x>0)
+[e $ ! > _delta_x -> 0 `i 3239  ]
+"87
+[; ;AP_C/AP_LCD.c: 87:  {
+{
+"88
+[; ;AP_C/AP_LCD.c: 88:   incx=1;
+[e = _incx -> -> 1 `i `uc ]
+"89
+[; ;AP_C/AP_LCD.c: 89:  }
+}
+[e $U 3240  ]
+"91
+[; ;AP_C/AP_LCD.c: 91:     else
+[e :U 3239 ]
+"92
+[; ;AP_C/AP_LCD.c: 92:  {
+{
+"93
+[; ;AP_C/AP_LCD.c: 93:     if( delta_x==0 )
+[e $ ! == _delta_x -> 0 `i 3241  ]
+"94
+[; ;AP_C/AP_LCD.c: 94:        {
+{
+"95
+[; ;AP_C/AP_LCD.c: 95:            v_Lcd12864DrawLineY_f(StartX,StartY,EndY,Color);
+[e ( _v_Lcd12864DrawLineY_f (4 , , , _StartX _StartY _EndY _Color ]
+"96
+[; ;AP_C/AP_LCD.c: 96:           return;
+[e $UE 3238  ]
+"97
+[; ;AP_C/AP_LCD.c: 97:         }
+}
+[e $U 3242  ]
+"98
+[; ;AP_C/AP_LCD.c: 98:         else { incx=-1; }
+[e :U 3241 ]
+{
+[e = _incx -> -U -> 1 `i `uc ]
+}
+[e :U 3242 ]
+"99
+[; ;AP_C/AP_LCD.c: 99:  }
+}
+[e :U 3240 ]
+"101
+[; ;AP_C/AP_LCD.c: 101:     if(delta_y>0)
+[e $ ! > _delta_y -> 0 `i 3243  ]
+"102
+[; ;AP_C/AP_LCD.c: 102:  {
+{
+"103
+[; ;AP_C/AP_LCD.c: 103:   incy=1;
+[e = _incy -> -> 1 `i `uc ]
+"104
+[; ;AP_C/AP_LCD.c: 104:  }
+}
+[e $U 3244  ]
+"106
+[; ;AP_C/AP_LCD.c: 106:     else
+[e :U 3243 ]
+"107
+[; ;AP_C/AP_LCD.c: 107:  {
+{
+"108
+[; ;AP_C/AP_LCD.c: 108:      if(delta_y==0)
+[e $ ! == _delta_y -> 0 `i 3245  ]
+"109
+[; ;AP_C/AP_LCD.c: 109:         {
+{
+"110
+[; ;AP_C/AP_LCD.c: 110:             v_Lcd12864DrawLineX_f( StartX,EndX,StartY,Color);
+[e ( _v_Lcd12864DrawLineX_f (4 , , , _StartX _EndX _StartY _Color ]
+"111
+[; ;AP_C/AP_LCD.c: 111:             return;
+[e $UE 3238  ]
+"112
+[; ;AP_C/AP_LCD.c: 112:         }
+}
+[e $U 3246  ]
+"113
+[; ;AP_C/AP_LCD.c: 113:        else { incy=-1; }
+[e :U 3245 ]
+{
+[e = _incy -> -U -> 1 `i `uc ]
+}
+[e :U 3246 ]
+"114
+[; ;AP_C/AP_LCD.c: 114:  }
+}
+[e :U 3244 ]
+"116
+[; ;AP_C/AP_LCD.c: 116:     delta_x=abs(delta_x);
+[e = _delta_x ( _abs (1 _delta_x ]
+"117
+[; ;AP_C/AP_LCD.c: 117:     delta_y=abs(delta_y);
+[e = _delta_y ( _abs (1 _delta_y ]
+"119
+[; ;AP_C/AP_LCD.c: 119:     if(delta_x>delta_y)
+[e $ ! > _delta_x _delta_y 3247  ]
+"120
+[; ;AP_C/AP_LCD.c: 120:  {
+{
+"121
+[; ;AP_C/AP_LCD.c: 121:   distance=delta_x;
+[e = _distance _delta_x ]
+"122
+[; ;AP_C/AP_LCD.c: 122:  }
+}
+[e $U 3248  ]
+"123
+[; ;AP_C/AP_LCD.c: 123:     else
+[e :U 3247 ]
+"124
+[; ;AP_C/AP_LCD.c: 124:  {
+{
+"125
+[; ;AP_C/AP_LCD.c: 125:   distance=delta_y;
+[e = _distance _delta_y ]
+"126
+[; ;AP_C/AP_LCD.c: 126:  }
+}
+[e :U 3248 ]
+"128
+[; ;AP_C/AP_LCD.c: 128:     Draw_point(StartX,StartY,Color);
+[e ( _Draw_point (3 , , _StartX _StartY _Color ]
+"130
+[; ;AP_C/AP_LCD.c: 130:     for(t=0;t<=distance+1;t++)
+{
+[e = _t -> 0 `i ]
+[e $U 3252  ]
+[e :U 3249 ]
+"131
+[; ;AP_C/AP_LCD.c: 131:     {
+{
+"132
+[; ;AP_C/AP_LCD.c: 132:         Draw_point(StartX,StartY,Color);
+[e ( _Draw_point (3 , , _StartX _StartY _Color ]
+"133
+[; ;AP_C/AP_LCD.c: 133:         x+=delta_x;
+[e =+ _x _delta_x ]
+"134
+[; ;AP_C/AP_LCD.c: 134:         y+=delta_y;
+[e =+ _y _delta_y ]
+"135
+[; ;AP_C/AP_LCD.c: 135:         if(x>distance)
+[e $ ! > _x _distance 3253  ]
+"136
+[; ;AP_C/AP_LCD.c: 136:         {
+{
+"137
+[; ;AP_C/AP_LCD.c: 137:             x-=distance;
+[e =- _x _distance ]
+"138
+[; ;AP_C/AP_LCD.c: 138:             StartX+=incx;
+[e =+ _StartX -> _incx `uc ]
+"139
+[; ;AP_C/AP_LCD.c: 139:         }
+}
+[e :U 3253 ]
+"140
+[; ;AP_C/AP_LCD.c: 140:         if(y>distance)
+[e $ ! > _y _distance 3254  ]
+"141
+[; ;AP_C/AP_LCD.c: 141:         {
+{
+"142
+[; ;AP_C/AP_LCD.c: 142:             y-=distance;
+[e =- _y _distance ]
+"143
+[; ;AP_C/AP_LCD.c: 143:             StartY+=incy;
+[e =+ _StartY -> _incy `uc ]
+"144
+[; ;AP_C/AP_LCD.c: 144:         }
+}
+[e :U 3254 ]
+"145
+[; ;AP_C/AP_LCD.c: 145:     }
+}
+[e ++ _t -> 1 `i ]
+[e :U 3252 ]
+[e $ <= _t + _distance -> 1 `i 3249  ]
+[e :U 3250 ]
+}
+"146
+[; ;AP_C/AP_LCD.c: 146: }
+[e :UE 3238 ]
+}
+"147
+[; ;AP_C/AP_LCD.c: 147: void LCD_DrawSineWave(void)
+[v _LCD_DrawSineWave `(v ~T0 @X0 1 ef ]
+"148
+[; ;AP_C/AP_LCD.c: 148: {
+{
+[e :U _LCD_DrawSineWave ]
+[f ]
+"149
+[; ;AP_C/AP_LCD.c: 149:  unsigned char xn=0;
+[v _xn `uc ~T0 @X0 1 a ]
+[e = _xn -> -> 0 `i `uc ]
+"150
+[; ;AP_C/AP_LCD.c: 150:  unsigned char yn=32;
+[v _yn `uc ~T0 @X0 1 a ]
+[e = _yn -> -> 32 `i `uc ]
+"151
+[; ;AP_C/AP_LCD.c: 151:  unsigned char i;
+[v _i `uc ~T0 @X0 1 a ]
+"152
+[; ;AP_C/AP_LCD.c: 152:  unsigned char xi,yi;
+[v _xi `uc ~T0 @X0 1 a ]
+[v _yi `uc ~T0 @X0 1 a ]
+"154
+[; ;AP_C/AP_LCD.c: 154:  for(i=0;i<127;i++)
+{
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> 127 `i 3256  ]
+[e $U 3257  ]
+[e :U 3256 ]
+"155
+[; ;AP_C/AP_LCD.c: 155:  {
+{
+"156
+[; ;AP_C/AP_LCD.c: 156:   xi=i;
+[e = _xi _i ]
+"157
+[; ;AP_C/AP_LCD.c: 157:   yi=(sinf(i*0.5)*20)+32;
+[e = _yi -> + * ( _sinf (1 -> * -> -> _i `i `d .0.5 `f -> -> 20 `i `f -> -> 32 `i `f `uc ]
+"158
+[; ;AP_C/AP_LCD.c: 158:   LCD_Draw_Two_Dot(xn,yn,xi,yi,1);
+[e ( _LCD_Draw_Two_Dot (4 , , , , _xn _yn _xi _yi -> -> 1 `i `uc ]
+"159
+[; ;AP_C/AP_LCD.c: 159:   xn=i;
+[e = _xn _i ]
+"160
+[; ;AP_C/AP_LCD.c: 160:   yn=yi;
+[e = _yn _yi ]
+"161
+[; ;AP_C/AP_LCD.c: 161:  }
+}
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 127 `i 3256  ]
+[e :U 3257 ]
+}
+"162
+[; ;AP_C/AP_LCD.c: 162: }
+[e :UE 3255 ]
+}
+"163
+[; ;AP_C/AP_LCD.c: 163: void LCD_DrawCoseWave(void)
+[v _LCD_DrawCoseWave `(v ~T0 @X0 1 ef ]
+"164
+[; ;AP_C/AP_LCD.c: 164: {
+{
+[e :U _LCD_DrawCoseWave ]
+[f ]
+"165
+[; ;AP_C/AP_LCD.c: 165:  unsigned char xn=0;
+[v _xn `uc ~T0 @X0 1 a ]
+[e = _xn -> -> 0 `i `uc ]
+"166
+[; ;AP_C/AP_LCD.c: 166:  unsigned char yn=32;
+[v _yn `uc ~T0 @X0 1 a ]
+[e = _yn -> -> 32 `i `uc ]
+"167
+[; ;AP_C/AP_LCD.c: 167:  unsigned char i;
+[v _i `uc ~T0 @X0 1 a ]
+"168
+[; ;AP_C/AP_LCD.c: 168:  unsigned char xi,yi;
+[v _xi `uc ~T0 @X0 1 a ]
+[v _yi `uc ~T0 @X0 1 a ]
+"170
+[; ;AP_C/AP_LCD.c: 170:  for(i=0;i<127;i++)
+{
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> 127 `i 3260  ]
+[e $U 3261  ]
+[e :U 3260 ]
+"171
+[; ;AP_C/AP_LCD.c: 171:  {
+{
+"172
+[; ;AP_C/AP_LCD.c: 172:   xi=i;
+[e = _xi _i ]
+"173
+[; ;AP_C/AP_LCD.c: 173:   yi=32-20*cosf(i*5/20);
+[e = _yi -> - -> -> 32 `i `f * -> -> 20 `i `f ( _cosf (1 -> / * -> _i `i -> 5 `i -> 20 `i `f `uc ]
+"174
+[; ;AP_C/AP_LCD.c: 174:   LCD_Draw_Two_Dot(xn,yn,xi,yi,1);
+[e ( _LCD_Draw_Two_Dot (4 , , , , _xn _yn _xi _yi -> -> 1 `i `uc ]
+"175
+[; ;AP_C/AP_LCD.c: 175:   xn=i;
+[e = _xn _i ]
+"176
+[; ;AP_C/AP_LCD.c: 176:   yn=yi;
+[e = _yn _yi ]
+"177
+[; ;AP_C/AP_LCD.c: 177:  }
+}
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 127 `i 3260  ]
+[e :U 3261 ]
+}
+"178
+[; ;AP_C/AP_LCD.c: 178: }
+[e :UE 3259 ]
 }

@@ -24,3 +24,6 @@ extern void display_12864(int y, int x, char  *p);
 extern void display_1632(int y, int x, char  *p);
 extern void display_3232(int y, int x, char  *p);
 extern void display_char(int y, int x, int char_length, unsigned char *p);
+extern void LCD_Draw_Two_Dot(unsigned char StartX,unsigned char StartY,unsigned char EndX,unsigned char EndY,unsigned char Color);
+extern void LCD_DrawSineWave(void);
+extern void LCD_DrawCoseWave(void);

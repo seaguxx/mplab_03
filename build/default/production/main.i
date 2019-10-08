@@ -36545,6 +36545,12 @@ extern void position(char x, char y);
 extern void LcdString(unsigned char *p);
 extern void sendDat(unsigned char dat);
 extern void sendCom(unsigned char com);
+
+extern unsigned char Readspi(void);
+extern unsigned char LCD_read_arm(void);
+extern void Draw_point(unsigned char X,unsigned char Y,unsigned char Color);
+extern void v_Lcd12864DrawLineX_f(unsigned char X0,unsigned char X1,unsigned char Y,unsigned char Color);
+extern void v_Lcd12864DrawLineY_f(unsigned char X,unsigned char Y0,unsigned char Y1,unsigned char Color);
 # 46 "main.c" 2
 
 # 1 "./AP_H/ap_lcd.h" 1
@@ -36553,16 +36559,24 @@ extern void display_12864(int y, int x, char *p);
 extern void display_1632(int y, int x, char *p);
 extern void display_3232(int y, int x, char *p);
 extern void display_char(int y, int x, int char_length, unsigned char *p);
+extern void LCD_Draw_Two_Dot(unsigned char StartX,unsigned char StartY,unsigned char EndX,unsigned char EndY,unsigned char Color);
+extern void LCD_DrawSineWave(void);
+extern void LCD_DrawCoseWave(void);
 # 47 "main.c" 2
 
 
 
 
 
+void C2Gb(void)
+{
+
+
+}
 void main(void) {
 
     SYSTEM_Initialize();
-# 65 "main.c"
+# 70 "main.c"
     LCDInit();
 
 
@@ -36582,7 +36596,8 @@ void main(void) {
         position(2,0);
         sendDat(0xa1);
         sendDat(0xF0);
-        display_char(2,9,4,"????");
+        display_char(2,9,4,"ÄãºÃÄúºÃ");
+        LCD_Draw_Two_Dot( 12, 0, 127, 63, 1 );
 
 
 
