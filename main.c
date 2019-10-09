@@ -45,15 +45,12 @@
 #include "USER_H/led.h"
 #include"USER_H/lcd.h"
 #include"AP_H/ap_lcd.h"
+#include "AP_H/GUI.h"
 
 /*
                          Main application
  */
-void C2Gb(void)
-{
 
-    
-}
 void main(void) {
     // Initialize the device
     SYSTEM_Initialize();
@@ -81,19 +78,15 @@ void main(void) {
         //        //ledoff();
         __delay_ms(1000);
         
-        position(1, 1);
+        position(2, 1);
         LcdString("dddddd");
         position(2,0);
-        sendDat(0xa1);
-        sendDat(0xF0);
-        display_char(2,9,4,"ÄãºÃÄúºÃ");
-        GRam_Clear();
+        //sendDat(0xa1);
+        //sendDat(0xF0);
+        Welcome();
+        
         __delay_ms(1000);
-        LCD_Draw_Two_Dot( 12,  0, 127, 63, 1 );
-        //        position(2, 1);
-        //        sendDat('H');
-        //lcdport();
-        //Spi8b(0xaa);
+        
         ledtest();
     }
 }
