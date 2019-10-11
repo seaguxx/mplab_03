@@ -46,11 +46,12 @@
 #include"USER_H/lcd.h"
 #include"AP_H/ap_lcd.h"
 #include "AP_H/GUI.h"
-
+#include "USER_H/key.h"
+#include "USER_H/CanBus.h"
+#include "mcc_generated_files/ecan.h"
 /*
                          Main application
  */
-
 void main(void) {
     // Initialize the device
     SYSTEM_Initialize();
@@ -60,31 +61,22 @@ void main(void) {
     // Use the following macros to:
 
     // Enable the Global Interrupts
-    //INTERRUPT_GlobalInterruptEnable();
-
+    INTERRUPT_GlobalInterruptEnable();
+    Key_Init();
     // Disable the Global Interrupts
     //INTERRUPT_GlobalInterruptDisable();
     LCDInit();
-    //position(2, 1);
-    //sendDat('H');
     Rst_SetHigh();
     Cs_SetHigh();
     Sid_SetHigh();
     Clk_SetHigh();
+    CanHardWareInit();
     while (1) {
-        // Add your application code
-
-        //        __delay_ms(1000);
-        //        //ledoff();
-        __delay_ms(1000);
         
-        position(2, 1);
-        LcdString("dddddd");
-        position(2,0);
-        //sendDat(0xa1);
-        //sendDat(0xF0);
+        
         Welcome();
-        
+        MessageTform(&Message_Send,2,0x011123,8,0x00,0x01,0x02,0x03,0x04,0x05,0x06,0xff);
+        CAN_transmit(&Message_Send);
         __delay_ms(1000);
         
         ledtest();
