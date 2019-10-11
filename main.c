@@ -66,15 +66,16 @@ void main(void) {
     // Disable the Global Interrupts
     //INTERRUPT_GlobalInterruptDisable();
     LCDInit();
-    Rst_SetHigh();
-    Cs_SetHigh();
-    Sid_SetHigh();
-    Clk_SetHigh();
+
     CanHardWareInit();
+    
+    Welcome();
+    
     while (1) {
         
         
-        Welcome();
+        MessageTform(&Message_Send,2,0x011123,8,0x00,0x01,0x02,0x03,0x04,0x05,0x06,Message_Receive.frame.data0);
+        CAN_transmit(&Message_Send);
         MessageTform(&Message_Send,2,0x011123,8,0x00,0x01,0x02,0x03,0x04,0x05,0x06,0xff);
         CAN_transmit(&Message_Send);
         __delay_ms(1000);
