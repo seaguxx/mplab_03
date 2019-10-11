@@ -26,7 +26,8 @@
  */
 #include <xc.h>
 #include "ext_int.h"
-
+#include "../USER_H/key.h"
+#include "tmr0.h"
 void (*INT0_InterruptHandler)(void);
 void (*INT1_InterruptHandler)(void);
 void (*INT2_InterruptHandler)(void);
@@ -43,6 +44,8 @@ void INT0_ISR(void)
 void INT0_CallBack(void)
 {
     // Add your custom callback code here
+    //Key1_Fla=1;
+    TMR0_StartTimer();
     if(INT0_InterruptHandler)
     {
         INT0_InterruptHandler();
@@ -69,6 +72,8 @@ void INT1_ISR(void)
 void INT1_CallBack(void)
 {
     // Add your custom callback code here
+    //Key2_Fla=1;
+    TMR0_StartTimer();
     if(INT1_InterruptHandler)
     {
         INT1_InterruptHandler();
