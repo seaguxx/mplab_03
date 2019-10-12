@@ -49,6 +49,7 @@
 #include "USER_H/key.h"
 #include "USER_H/CanBus.h"
 #include "mcc_generated_files/ecan.h"
+
 /*
                          Main application
  */
@@ -68,18 +69,36 @@ void main(void) {
     LCDInit();
 
     CanHardWareInit();
-    
+
     Welcome();
-    
+
     while (1) {
-        
-        
-        MessageTform(&Message_Send,2,0x011123,8,0x00,0x01,0x02,0x03,0x04,0x05,0x06,Message_Receive.frame.data0);
-        CAN_transmit(&Message_Send);
-        MessageTform(&Message_Send,2,0x011123,8,0x00,0x01,0x02,0x03,0x04,0x05,0x06,0xff);
-        CAN_transmit(&Message_Send);
+
+
+        //        MessageTform(&Message_Send, 2, 0x011123, 8, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, Message_Receive.frame.data0);
+        //        CAN_transmit(&Message_Send);
+        //        MessageTform(&Message_Send, 2, 0x00411123, 8, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0xff);
+        //        CAN_transmit(&Message_Send);
+        //Function_Shoot();
+        if (Message_Receive_02.frame.data0 == 0x5a) {
+            NO4_TNT
+            Message_Receive_02.frame.data0 = 0x00;
+        }
+        if (Message_Receive_02.frame.data0 == 0x4a) {
+            NO3_TNT
+            Message_Receive_02.frame.data0 = 0x00;
+        }
+
+
+        if (Can_1s_Send_Fla == 1) {
+
+
+            Can_1s_Send_Fla = 0;
+            MessageTform(&Message_Send_Test, 2, 0x00411121, 8, 0xee, 0x01, 0x02, 0x03, 0x04, 0x05, 0x07, 0XEE);
+            CAN_transmit_TXB0(&Message_Send_Test);
+        }
         __delay_ms(1000);
-        
+
         ledtest();
     }
 }
