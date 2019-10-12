@@ -49,7 +49,20 @@
 #include "USER_H/key.h"
 #include "USER_H/CanBus.h"
 #include "mcc_generated_files/ecan.h"
-
+#define Equ_ID_01 0x18ff7080
+#define Equ_ID_02 0x18ff7081
+#define Equ_ID_03 0x18ff7082
+#define Equ_ID_04 0x18ff7083
+#define Equ_Num 4
+#define Equ_Status_OffLine 0x99
+#define Equ_Status_Fault 0x77
+#define Equ_Status_Ok 0x00
+#define Equ_Status_TNT 0X88
+unsigned char Equ_DATA_Current_HeartBeat_08[Equ_Num]={0X00,0X00,0X00,0X00};
+unsigned char Equ_DATA_Update_HeartBeat_08[Equ_Num]={0X00,0X00,0X00,0X00};
+unsigned char Equ_DATA_Status_07[Equ_Num]={0X00,0X00,0X00,0X00};
+char Equ_OnLine_Fla=0x00;
+char LoopCnt=0;
 /*
                          Main application
  */
@@ -73,7 +86,45 @@ void main(void) {
     Welcome();
 
     while (1) {
-
+                if(Can_Receive_Fla_01==1)
+                {
+                    switch(Message_Receive_02.frame.id)
+                    {
+                        case Equ_ID_01:
+                        {
+                            Equ_DATA_Current_HeartBeat_08[0]=Message_Receive_02.frame.data7;
+                            Equ_DATA_Status_07[0]=Message_Receive_02.frame.data6;
+                        }break;
+                        case Equ_ID_02:
+                        {
+                            Equ_DATA_Current_HeartBeat_08[1]=Message_Receive_02.frame.data7;
+                            Equ_DATA_Status_07[1]=Message_Receive_02.frame.data6;
+                        }break;
+                        case Equ_ID_03:
+                        {
+                            Equ_DATA_Current_HeartBeat_08[2]=Message_Receive_02.frame.data7;
+                            Equ_DATA_Status_07[2]=Message_Receive_02.frame.data6;
+                        }break;
+                        case Equ_ID_04:
+                        {
+                            Equ_DATA_Current_HeartBeat_08[3]=Message_Receive_02.frame.data0;
+                            Equ_DATA_Status_07[3]=Message_Receive_02.frame.data6;
+                        }break;
+                        default:
+                        {
+                            break;
+                        }
+                    }
+                }
+                for(LoopCnt=0;LoopCnt<Equ_Num;LoopCnt++)
+                {
+                    
+                    if(Equ_DATA_Status_07[LoopCnt]==Equ_Status_Ok)
+                    {
+                        
+                    }
+                }
+                
 
         //        MessageTform(&Message_Send, 2, 0x011123, 8, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, Message_Receive.frame.data0);
         //        CAN_transmit(&Message_Send);
@@ -87,6 +138,7 @@ void main(void) {
         if (Message_Receive_02.frame.data0 == 0x4a) {
             NO3_TNT
             Message_Receive_02.frame.data0 = 0x00;
+            
         }
 
 
