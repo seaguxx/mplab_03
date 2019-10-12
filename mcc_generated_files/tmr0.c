@@ -56,10 +56,15 @@
 #include "../USER_H/CanBus.h"
 #define MuteKeyDownTime 200 //200*10
 #define ShootKeyDownTime 300
+#define Tmr0_3s 300
+#define Tmr0_half_1s 50
+#define Tmr0_1s 100
 char Tmr0_Run_Fla = 0;
 char Tmr0_1s_Fla = 0;
-char Can_1s_Send_Fla=0;
+char Tmr0_3s_Fla = 0;
+char Can_1s_Send_Fla = 0;
 unsigned int Tmr0_1s_Cnt = 0;
+unsigned int Tmr0_3s_Cnt = 0;
 /**
   Section: TMR0 APIs
  */
@@ -138,40 +143,54 @@ void TMR0_ISR(void)//10ms
     // clear the TMR0 interrupt flag
     PIR3bits.TMR0IF = 0;
     Tmr0_1s_Cnt++;
-    if (Tmr0_1s_Cnt == 50) {
-        Yled_Toggle();
-
+    Tmr0_3s_Cnt++;
+    if (Tmr0_3s_Cnt >= Tmr0_3s) {
+        Tmr0_3s_Cnt = 0;
+        Tmr0_3s_Fla = 1;
     }
-    if (Tmr0_1s_Cnt ==100) {
+    if (Tmr0_1s_Cnt == Tmr0_half_1s) {
+        //Yled_Toggle();
+
+    } 
+    else if ((Tmr0_1s_Cnt > Tmr0_half_1s)&&(Tmr0_1s_Cnt < Tmr0_1s)) {
+        //Yled_SetLow();
+
+    } 
+    else if (Tmr0_1s_Cnt == Tmr0_1s) {
+        Yled_Toggle();
         Tmr0_1s_Fla = 1;
         Tmr0_1s_Cnt = 0;
+    } 
+    else 
+    {
     }
     if (Tmr0_1s_Fla == 1) {
         Tmr0_1s_Fla = 0;
-        
+
         MessageTform(&Message_Send_Test, 2, 0x00411122, 8, 0xee, 0x01, 0x02, 0x03, 0x04, 0x05, 0x07, 0XEE);
         CAN_transmit_TXB1(&Message_Send_Test);
-        
-        Can_1s_Send_Fla=1;
+
+        Can_1s_Send_Fla = 1;
     }
 
 
     if (Key1_Fla == 1) {
         Fuction_Mute();
-        
-        Function_Shoot();
-        
+
+       
+
         Key1_Fla = 0;
     }
     if (Key2_Fla == 1) {
-        TMR0_StopTimer();
+        //TMR0_StopTimer();
         Function_Shoot();
-        TMR0_StartTimer();
+        //TMR0_StartTimer();
         Key2_Fla = 0;
     }
     if (RB0_GetValue() == 0) {
         Key1_Cnt++;
         if (Key1_Cnt >= MuteKeyDownTime) {
+            
             Key1_Fla = 1;
             Key1_Cnt = 0;
         } else {
