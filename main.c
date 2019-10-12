@@ -63,6 +63,7 @@ unsigned char Equ_DATA_Update_HeartBeat_08[Equ_Num]={0X00,0X00,0X00,0X00};
 unsigned char Equ_DATA_Status_07[Equ_Num]={0X00,0X00,0X00,0X00};
 char Equ_OnLine_Fla=0x00;
 char LoopCnt=0;
+char OnlineCnt=0;
 /*
                          Main application
  */
@@ -108,7 +109,7 @@ void main(void) {
                         }break;
                         case Equ_ID_04:
                         {
-                            Equ_DATA_Current_HeartBeat_08[3]=Message_Receive_02.frame.data0;
+                            Equ_DATA_Current_HeartBeat_08[3]=Message_Receive_02.frame.data7;
                             Equ_DATA_Status_07[3]=Message_Receive_02.frame.data6;
                         }break;
                         default:
@@ -254,6 +255,10 @@ void main(void) {
                     }
                     
                 }
+                for(OnlineCnt=0;OnlineCnt<Equ_Num;OnlineCnt++)
+                {
+                    
+                }
                 
 
         //        MessageTform(&Message_Send, 2, 0x011123, 8, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, Message_Receive.frame.data0);
@@ -279,7 +284,7 @@ void main(void) {
             MessageTform(&Message_Send_Test, 2, 0x00411121, 8, 0xee, 0x01, 0x02, 0x03, 0x04, 0x05, 0x07, 0XEE);
             CAN_transmit_TXB0(&Message_Send_Test);
         }
-        __delay_ms(1000);
+        __delay_ms(500);
 
         ledtest();
     }
