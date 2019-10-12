@@ -54,16 +54,20 @@
 #define Equ_ID_03 0x18ff7082
 #define Equ_ID_04 0x18ff7083
 #define Equ_Num 4
+#define Equ_Status_OnLine 0xAA
 #define Equ_Status_OffLine 0x99
 #define Equ_Status_Fault 0x77
 #define Equ_Status_Ok 0x00
 #define Equ_Status_TNT 0X88
-unsigned char Equ_DATA_Current_HeartBeat_08[Equ_Num]={0X00,0X00,0X00,0X00};
-unsigned char Equ_DATA_Update_HeartBeat_08[Equ_Num]={0X00,0X00,0X00,0X00};
-unsigned char Equ_DATA_Status_07[Equ_Num]={0X00,0X00,0X00,0X00};
-char Equ_OnLine_Fla=0x00;
-char LoopCnt=0;
-char OnlineCnt=0;
+unsigned char Equ_DATA_Current_HeartBeat_08[Equ_Num] = {0X00, 0X00, 0X00, 0X00};
+unsigned char Equ_DATA_Update_HeartBeat_08[Equ_Num] = {0X00, 0X00, 0X00, 0X00};
+unsigned char Equ_DATA_Status_07[Equ_Num] = {0X00, 0X00, 0X00, 0X00};
+unsigned char Equ_OnLine_Fla[Equ_Num] = {0x00, 0x00, 0x00, 0x00};
+char LoopCnt = 0;
+char OnlineCnt = 0;
+char OnLineNum = 0;
+char LoopCnt_No_Sense = 0;
+
 /*
                          Main application
  */
@@ -85,181 +89,243 @@ void main(void) {
     CanHardWareInit();
 
     Welcome();
-
+    __delay_ms(2000);
+    Docker();
     while (1) {
-                if(Can_Receive_Fla_01==1)
+        if (Key_Shoot_Fla_01 == 1) {
+            Key_Shoot_Fla_01 = 0;
+            LoopCnt_No_Sense = 0;
+            do {
+                Key_Shoot
+                __delay_ms(1000);
+                SysTitle
+                __delay_ms(1000);
+                LoopCnt_No_Sense++;
+            } while (LoopCnt_No_Sense < 3);
+
+            Docker();
+        }
+        if (Can_Receive_Fla_01 == 1) {
+            Can_Receive_Fla_01 = 0;
+            switch (Message_Receive_02.frame.id) {
+                case Equ_ID_01:
                 {
-                    Can_Receive_Fla_01=0;
-                    switch(Message_Receive_02.frame.id)
-                    {
-                        case Equ_ID_01:
+                    Equ_DATA_Current_HeartBeat_08[0] = Message_Receive_02.frame.data7;
+                    Equ_DATA_Status_07[0] = Message_Receive_02.frame.data6;
+                }
+                    break;
+                case Equ_ID_02:
+                {
+                    Equ_DATA_Current_HeartBeat_08[1] = Message_Receive_02.frame.data7;
+                    Equ_DATA_Status_07[1] = Message_Receive_02.frame.data6;
+                }
+                    break;
+                case Equ_ID_03:
+                {
+                    Equ_DATA_Current_HeartBeat_08[2] = Message_Receive_02.frame.data7;
+                    Equ_DATA_Status_07[2] = Message_Receive_02.frame.data6;
+                }
+                    break;
+                case Equ_ID_04:
+                {
+                    Equ_DATA_Current_HeartBeat_08[3] = Message_Receive_02.frame.data7;
+                    Equ_DATA_Status_07[3] = Message_Receive_02.frame.data6;
+                }
+                    break;
+                default:
+                {
+                    break;
+                }
+            }
+        }
+
+        for (LoopCnt = 0; LoopCnt < Equ_Num; LoopCnt++) {
+            if (Equ_OnLine_Fla[LoopCnt] == Equ_Status_OnLine) {
+                if (Equ_DATA_Status_07[LoopCnt] == Equ_Status_Ok) {
+                    switch (LoopCnt) {
+                        case 0:
                         {
-                            Equ_DATA_Current_HeartBeat_08[0]=Message_Receive_02.frame.data7;
-                            Equ_DATA_Status_07[0]=Message_Receive_02.frame.data6;
-                        }break;
-                        case Equ_ID_02:
+                            NO1_OK
+                        }
+                            break;
+                        case 1:
                         {
-                            Equ_DATA_Current_HeartBeat_08[1]=Message_Receive_02.frame.data7;
-                            Equ_DATA_Status_07[1]=Message_Receive_02.frame.data6;
-                        }break;
-                        case Equ_ID_03:
+                            NO2_OK
+                        }
+                            break;
+                        case 2:
                         {
-                            Equ_DATA_Current_HeartBeat_08[2]=Message_Receive_02.frame.data7;
-                            Equ_DATA_Status_07[2]=Message_Receive_02.frame.data6;
-                        }break;
-                        case Equ_ID_04:
+                            NO3_OK
+                        }
+                            break;
+                        case 3:
                         {
-                            Equ_DATA_Current_HeartBeat_08[3]=Message_Receive_02.frame.data7;
-                            Equ_DATA_Status_07[3]=Message_Receive_02.frame.data6;
-                        }break;
+                            NO4_OK
+                        }
+                            break;
                         default:
                         {
                             break;
                         }
                     }
+                } else if (Equ_DATA_Status_07[LoopCnt] == Equ_Status_Fault) {
+                    switch (LoopCnt) {
+                        case 0:
+                        {
+                            NO1_Fault
+                        }
+                            break;
+                        case 1:
+                        {
+                            NO2_Fault
+                        }
+                            break;
+                        case 2:
+                        {
+                            NO3_Fault
+                        }
+                            break;
+                        case 3:
+                        {
+                            NO4_Fault
+                        }
+                            break;
+                        default:
+                        {
+                            break;
+                        }
+                    }
+                } else if (Equ_DATA_Status_07[LoopCnt] == Equ_Status_TNT) {
+                    switch (LoopCnt) {
+                        case 0:
+                        {
+                            NO1_TNT
+                        }
+                            break;
+                        case 1:
+                        {
+                            NO2_TNT
+                        }
+                            break;
+                        case 2:
+                        {
+                            NO3_TNT
+                        }
+                            break;
+                        case 3:
+                        {
+                            NO4_TNT
+                        }
+                            break;
+                        default:
+                        {
+
+                            break;
+                        }
+                    }
+                } else {
+                    switch (LoopCnt) {
+                        case 0:
+                        {
+                            NO1_Code_Er
+                        }
+                            break;
+                        case 1:
+                        {
+                            NO2_Code_Er
+                        }
+                            break;
+                        case 2:
+                        {
+                            NO3_Code_Er
+                        }
+                            break;
+                        case 3:
+                        {
+                            NO4_Code_Er
+                        }
+                            break;
+                        default:
+                        {
+
+                            break;
+                        }
+                    }
                 }
-                for(LoopCnt=0;LoopCnt<Equ_Num;LoopCnt++)
+
+            } else if (Equ_OnLine_Fla[LoopCnt] == Equ_Status_OffLine) {
+                switch (LoopCnt) {
+                    case 0:
+                    {
+
+                        NO1_OffLine
+                    }
+                        break;
+                    case 1:
+                    {
+                        NO2_OffLine
+                    }
+                        break;
+                    case 2:
+                    {
+                        NO3_OffLine
+                    }
+                        break;
+                    case 3:
+                    {
+                        NO4_OffLine
+                    }
+                        break;
+                    default:break;
+                }
+            } else {
+
+            }
+        }
+        if (Tmr0_3s_Fla == 1) {
+            Tmr0_3s_Fla = 0;
+            OnLineNum = 0;
+            for (OnlineCnt = 0; OnlineCnt < Equ_Num; OnlineCnt++) {
+                if (Equ_DATA_Update_HeartBeat_08[OnlineCnt] != Equ_DATA_Current_HeartBeat_08[OnlineCnt]) {
+                    Equ_DATA_Update_HeartBeat_08[OnlineCnt] = Equ_DATA_Current_HeartBeat_08[OnlineCnt];
+                    Equ_OnLine_Fla[OnlineCnt] = Equ_Status_OnLine;
+                    ++OnLineNum;
+                } else {
+                    Equ_OnLine_Fla[OnlineCnt] = Equ_Status_OffLine;
+                }
+
+            }
+            switch (OnLineNum) {
+                case 0:
                 {
-                    
-                    if(Equ_DATA_Status_07[LoopCnt]==Equ_Status_Ok)
-                    {
-                        switch(LoopCnt)
-                        {
-                            case 0:
-                            {
-                                NO1_OK
-                            }break;
-                            case 1:
-                            {
-                                NO2_OK
-                            }break;
-                            case 2:
-                            {
-                                NO3_OK
-                            }break;
-                            case 3:
-                            {
-                                NO4_OK
-                            }break;                           
-                            default:
-                            {
-                                break;
-                            }
-                        }
-                    }
-                    else if(Equ_DATA_Status_07[LoopCnt]==Equ_Status_Fault)
-                    {
-                        switch(LoopCnt)
-                        {
-                            case 0:
-                            {
-                                NO1_Fault
-                            }break;
-                            case 1:
-                            {
-                                NO2_Fault
-                            }break;
-                            case 2:
-                            {
-                                NO3_Fault
-                            }break;
-                            case 3:
-                            {
-                                NO4_Fault
-                            }break;                           
-                            default:
-                            {
-                                break;
-                            }
-                        }                    
-                    }
-                    else if(Equ_DATA_Status_07[LoopCnt]==Equ_Status_OffLine)
-                    {
-                        switch(LoopCnt)
-                        {
-                            case 0:
-                            {
-                                NO1_OffLine
-                            }break;
-                            case 1:
-                            {
-                                NO2_OffLine
-                            }break;
-                            case 2:
-                            {
-                                NO3_OffLine
-                            }break;
-                            case 3:
-                            {
-                                NO4_OffLine
-                            }break;                           
-                            default:
-                            {
-                                break;
-                            }
-                        }                        
-                    }
-                    else if(Equ_DATA_Status_07[LoopCnt]==Equ_Status_TNT)
-                    {
-                        switch(LoopCnt)
-                        {
-                            case 0:
-                            {
-                                NO1_TNT
-                            }break;
-                            case 1:
-                            {
-                                NO2_TNT
-                            }break;
-                            case 2:
-                            {
-                                NO3_TNT
-                            }break;
-                            case 3:
-                            {
-                                NO4_TNT
-                            }break;                           
-                            default:
-                            {
-                                
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        switch(LoopCnt)
-                        {
-                            case 0:
-                            {
-                                NO1_Code_Er
-                            }break;
-                            case 1:
-                            {
-                                NO2_Code_Er
-                            }break;
-                            case 2:
-                            {
-                                NO3_Code_Er
-                            }break;
-                            case 3:
-                            {
-                                NO4_Code_Er
-                            }break;                           
-                            default:
-                            {
-                                
-                                break;
-                            }
-                        }
-                    }
-                    
+                    OnLine_0
                 }
-                for(OnlineCnt=0;OnlineCnt<Equ_Num;OnlineCnt++)
+                break;
+                case 1:
                 {
-                    
+                    OnLine_1
                 }
-                
+                break;
+                case 2:
+                {
+                    OnLine_2
+                }
+                break;
+                case 3:
+                {
+                    OnLine_3
+                }
+                break;
+                case 4:
+                {
+                    OnLine_4
+                }
+                break;
+                default:break;
+            }
+
+        }
+
 
         //        MessageTform(&Message_Send, 2, 0x011123, 8, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, Message_Receive.frame.data0);
         //        CAN_transmit(&Message_Send);
@@ -273,7 +339,7 @@ void main(void) {
         if (Message_Receive_02.frame.data0 == 0x4a) {
             NO3_TNT
             Message_Receive_02.frame.data0 = 0x00;
-            
+
         }
 
 
@@ -284,8 +350,6 @@ void main(void) {
             MessageTform(&Message_Send_Test, 2, 0x00411121, 8, 0xee, 0x01, 0x02, 0x03, 0x04, 0x05, 0x07, 0XEE);
             CAN_transmit_TXB0(&Message_Send_Test);
         }
-        __delay_ms(500);
-
         ledtest();
     }
 }
